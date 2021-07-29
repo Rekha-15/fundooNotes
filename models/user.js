@@ -42,6 +42,7 @@ class Model {
       email: data.email,
       password: data.password,
     });
+    //The await keyword will ask the execution to wait until the defined task gets executed
     const user = await FundooNoteModel.findOne({ email: data.email });
     if (user) {
       callback('User already exist');
@@ -50,31 +51,15 @@ class Model {
       callback(null, userData);
     }
 
-  FundooNoteModel.save({}, (err, data) => {
-      return err ? callback(err, null) : callback(null, data);
-  });
-} 
-//get all the data from the server
-  findAll = (callback) => {
-    try {
-        FundooNoteModel.find({}, (err, data)=> {
-            return err ? callback(err, null) : callback(null, data);
+  return FundooNoteModel.save() 
+        .then(data => {
+          return data;
+        }).catch(err => {
+          console.log(err);
+          let message = err.message || "Error occured";
+          throw message
         });
-    } catch (err) {
-        callback(err, null);
-    }
-};
-
-// get one user by id
-getDataById = (userId, callback) => {
-    try{
-        FundooNoteModel.findById(userId, (err, data) => {
-            return err ? callback(err, null) : callback(null, data);
-        });
-    } catch (err) {
-        callback(err, null);
-    }
-};
+      }
 }
 
 //exporting the class        
