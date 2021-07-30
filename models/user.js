@@ -1,3 +1,10 @@
+/**
+ * @description   : It is use to create schema in data base and doing schema vlidation and
+ *                  encrypting password.
+ * @package       : mongoose, bcrypt
+ * @file          : user.js
+ * @author        : Rekha Patil
+*/
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 
@@ -9,7 +16,6 @@ const fundooNoteSchema = mongoose.Schema({
 }, {
   timestamps: true,
 });
-
 /**
  * @description     : It is converting password content to a encrypted to form using pre middleware
  *                    of mongoose and bcrypt npm package.
@@ -42,7 +48,6 @@ class Model {
       email: data.email,
       password: data.password,
     });
-    //The await keyword will ask the execution to wait until the defined task gets executed
     const user = await FundooNoteModel.findOne({ email: data.email });
     if (user) {
       callback('User already exist');
@@ -50,17 +55,20 @@ class Model {
       const userData = await note.save();
       callback(null, userData);
     }
+  }
 
-  return FundooNoteModel.save() 
-        .then(data => {
-          return data;
-        }).catch(err => {
-          console.log(err);
-          let message = err.message || "Error occured";
-          throw message
-        });
-      }
+  /**
+   * @description     : It uses to login the registered user
+   * @param           : data, callback
+  */
+  login = (data, callback) => {
+    FundooNoteModel.findOne({ email: data.email })
+      .then((user) => {
+        callback(null, user);
+      });
+  }
 }
+
 
 //exporting the class        
 module.exports = new Model();
