@@ -5,8 +5,6 @@
 */
 const bcrypt = require('bcrypt');
 const models = require('../models/user');
-//const { Secret_key } = require('jsonwebtoken')
-
 
 class Service {
   /**
@@ -23,7 +21,6 @@ class Service {
    * @param           : data, callback
    * @method          : login from models
   */
-
   login = (data, callback) => {
     const { password } = data;
     models.login(data, (error, result) => {
@@ -32,7 +29,7 @@ class Service {
           if (err) {
             callback(err, null);
           }
-          if (result) {
+          if (resultt) {
             callback(null, result);
           } else {
             callback('Password does not match');
@@ -43,7 +40,6 @@ class Service {
       }
     });
   }
-
 }
 
 //exporting the class

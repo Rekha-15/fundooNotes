@@ -1,0 +1,23 @@
+{
+    "user": {
+            "registration": {
+                "firstName": "Mahendra",
+                "lastName": "Doni",
+                "email": "Dhoni1215@gmail.com",
+                "password": "Dhonicool@15#"
+            },
+        "registrationWithImproperDetails": {
+            "firstName": "Riya",
+            "email": "Riya1597@gmail.com",
+            "password": "Riya@15#"
+        },
+        "login": {
+            "email": "rekhapatil.1509@gmail.com",
+            "password": "Password@15#"
+        },
+        "loginWithImproperDetails": {
+            "email": "rekhapatil.1509@gmail.com",
+            "password": "password15"
+        }
+    }
+}

@@ -4,10 +4,9 @@
  * @file          : user.js
  * @author        : Rekha Patil
 */
-
 require('dotenv').config();
 const services = require('../service/user');
-const { authSchema, generatingToken } = require('../utility/validation');
+const { authSchema } = require('../utility/validation');
 
 /**
  * @description    : This class has two methods to create and login of user
@@ -21,7 +20,7 @@ class Controller {
    * @method        : validate it compares the authSchema properties and the data coming
    *                  from the object and using services file method
   */
-  create = (req, res) => {
+   create = (req, res) => {
     try {
       const userDetails = {
         firstName: req.body.firstName,
@@ -31,7 +30,6 @@ class Controller {
       };
       const validationResult = authSchema.validate(userDetails);
       if (validationResult.error) {
-        //the server cannot or will not process the request , client error
         res.status(400).send({
           success: false,
           message: 'Pass the proper format of all the fields',
@@ -41,20 +39,17 @@ class Controller {
       }
       services.create(userDetails, (error, data) => {
         if (error) {
-          //the server cannot or will not process the request , client error
           return res.status(400).send({
             success: false,
             message: error,
           });
         }
-        //The HTTP 200 success status response 
         return res.status(200).send({
           success: true,
           message: 'created successfully',
         });
       });
     } catch (err) {
-      //This error is usually returned by the server when no other error code is suitable
       res.status(500).send({
         success: false,
         message: 'Internal server error',
@@ -64,11 +59,9 @@ class Controller {
 
   /**
    * @description   : login an user in fundooNote
-   * @param {*} req httpRequest
-   * @param {*} res httpResponse
-   * @returns http status error
-   */
-
+   * @param         : httpRequest and httpResponse
+   * @method        : services file method for login having an object and callback
+  */
   login = (req, res) => {
     try {
       const loginCredentials = {
@@ -77,7 +70,6 @@ class Controller {
       };
       services.login(loginCredentials, (error, data) => {
         if (error) {
-          //the server cannot or will not process the request , client error
           return res.status(400).send({
             success: false,
             message: 'login failed',
@@ -87,12 +79,10 @@ class Controller {
         return res.status(200).send({
           success: true,
           message: 'logged in successfully',
-          token: generatingToken(data),
           data,
         });
       });
     } catch (err) {
-      //http 500 error is usually returned by the server when no other error code is suitable.
       return res.status(500).send({
         success: false,
         message: 'Internal server error',
@@ -100,6 +90,7 @@ class Controller {
     }
   }
 }
+
     
 //exporting the class
 module.exports = new Controller();

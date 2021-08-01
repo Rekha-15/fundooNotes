@@ -8,6 +8,7 @@
 //to get express, and wanted to use express in this machine also we need 'express' package
 //importing express and body-parser modules
 const express = require('express');
+require('dotenv').config();
 const bodyParser = require('body-parser');
 
 //create express app
@@ -46,11 +47,10 @@ app.get('/', (req, res) => {
 require('./routes/users')(app);
 
 
-
-// listen for requests
 //listen on port 5000 for incoming connects
-app.listen(5000, () => {
-    console.log("Server is listening on port 5000");
+// listen for requests
+app.listen(process.env.PORT, () => {
+    console.log(`Server is listening on port ${process.env.PORT}`);
 });
 
 module.exports = app;
