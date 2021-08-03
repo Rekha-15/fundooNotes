@@ -6,7 +6,9 @@
 */
 require('dotenv').config();
 const services = require('../service/user');
-const { authSchema } = require('../utility/validation');
+//const jwt = require('jsonwebtoken');
+const { authSchema, userLoginDetails } = require('../utility/validation');
+
 
 /**
  * @description    : This class has two methods to create and login of user
@@ -20,7 +22,7 @@ class Controller {
    * @method        : validate it compares the authSchema properties and the data coming
    *                  from the object and using services file method
   */
-   create = (req, res) => {
+  create = (req, res) => {
     try {
       const userDetails = {
         firstName: req.body.firstName,
@@ -68,6 +70,15 @@ class Controller {
         email: req.body.email,
         password: req.body.password,
       };
+      const validationResult = userLoginDetails.validate(loginCredentials);
+      if (validationResult.error) {
+        res.status(400).send({
+          success: false,
+          message: 'Pass the proper format of all the fields',
+          data: validationResult,
+        });
+        return;
+      }
       services.login(loginCredentials, (error, data) => {
         if (error) {
           return res.status(400).send({
@@ -79,7 +90,6 @@ class Controller {
         return res.status(200).send({
           success: true,
           message: 'logged in successfully',
-          data,
         });
       });
     } catch (err) {
@@ -90,7 +100,6 @@ class Controller {
     }
   }
 }
-
     
 //exporting the class
 module.exports = new Controller();

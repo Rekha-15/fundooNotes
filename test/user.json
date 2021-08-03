@@ -6,11 +6,22 @@
                 "email": "Dhoni1215@gmail.com",
                 "password": "Dhonicool@15#"
             },
-        "registrationWithImproperDetails": {
+        "registrationWithNolastName": {
             "firstName": "Riya",
             "email": "Riya1597@gmail.com",
             "password": "Riya@15#"
         },
+        "registrationWithNoemailId": {
+            "firstName": "Nammu",
+            "lastName": "Shree",
+            "password": "NammuShree12$"
+        },
+        "registrationWithNoPassword": {
+            "firstName": "Nammu",
+            "lastName": "Shree",
+            "email": "Nammushree.12@gmail.com"
+        },
+
         "login": {
             "email": "rekhapatil.1509@gmail.com",
             "password": "Password@15#"
@@ -18,6 +29,17 @@
         "loginWithImproperDetails": {
             "email": "rekhapatil.1509@gmail.com",
             "password": "password15"
+        },
+
+        "loginWithImproperemailId": {
+            "email": "rekhapatil@gmail.com",
+            "password": "Password@15#"
+        },
+
+        "loginWithImproperepassword": {
+            "email": "rekhapatil.1509@gmail.com",
+            "password": "Password@#"
+            
         }
     }
 }

@@ -26,7 +26,7 @@ describe('login', () => {
   });
   /**
    * Post Request
-   * Negative test for login , By entering wrong enail or password
+   * Negative test for login , By entering wrong email or password
    */
   it('givenLoginDetails_whenImproper_shouldUnableToLogin', (done) => {
     const loginDetails = loginData.user.loginWithImproperDetails;
@@ -35,6 +35,33 @@ describe('login', () => {
       .post('/login')
       .send(loginDetails)
       .end((err, res) => {
+        //the server cannot or will not process the request 
+        res.should.have.status(400);
+        done();
+      });
+  });
+
+  it('givenLoginDetails_whenImproper_shouldUnableToLogin', (done) => {
+    const loginDetails = loginData.user.loginWithImproperemailId;
+    chai
+      .request(server)
+      .post('/login')
+      .send(loginDetails)
+      .end((err, res) => {
+        //the server cannot or will not process the request 
+        res.should.have.status(400);
+        done();
+      });
+  });
+
+  it('givenLoginDetails_whenImproper_shouldUnableToLogin', (done) => {
+    const loginDetails = loginData.user.loginWithImproperepassword;
+    chai
+      .request(server)
+      .post('/login')
+      .send(loginDetails)
+      .end((err, res) => {
+        //the server cannot or will not process the request 
         res.should.have.status(400);
         done();
       });

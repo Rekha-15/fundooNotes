@@ -56,6 +56,7 @@ class Model {
       callback(null, userData);
     }
   }
+
   /**
    * @description     : It uses to login the registered user
    * @param           : data, callback

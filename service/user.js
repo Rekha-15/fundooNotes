@@ -6,6 +6,7 @@
 const bcrypt = require('bcrypt');
 const models = require('../models/user');
 
+
 class Service {
   /**
    * @description     : it acts as a midlleware for models and controllers

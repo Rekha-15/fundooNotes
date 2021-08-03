@@ -10,6 +10,8 @@
 const express = require('express');
 require('dotenv').config();
 const bodyParser = require('body-parser');
+const swaggerUI = require('swagger-ui-express');
+const swaggerDoc = require('./swagger/swagger.json');
 
 //create express app
 const app = express();
@@ -36,6 +38,14 @@ mongoose.connect(dbConfig.url, {
     console.log('Could not connect to the database. Exiting now...', err);
     process.exit();
 });
+
+//displaying swagger explorer bar by passing true
+const options = {
+    explorer: true
+  };
+
+// swagger ui
+app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerDoc, options));
 
 app.get('/', (req, res) => {
   res.json({ message: 'Welcome to the FundooNotesApp.' });

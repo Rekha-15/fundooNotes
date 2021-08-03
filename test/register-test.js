@@ -11,6 +11,7 @@ chai.should();
  * Positive Test for registration, and saving to DB
  */
 describe('registartion', () => {
+    //mini discribe
   it('givenRegistrationDetails_whenProper_shouldSaveInDB', (done) => {
     const registartionDetails = registrationData.user.registration;
     chai
@@ -26,8 +27,34 @@ describe('registartion', () => {
    * Post Request
    * Negative Test Case, By not giving last name
    */
-  it('givenRegistrationDetails_whenImpProper_shouldNotSaveInDB', (done) => {
-    const registartionDetails = registrationData.user.registrationWithImproperDetails;
+  it('givenRegistrationDetails_whenNolastName_shouldNotSaveInDB', (done) => {
+    const registartionDetails = registrationData.user.registrationWithNolastName;
+    chai
+      .request(server)
+      .post('/registration')
+      .send(registartionDetails)
+      .end((err, res) => {
+          //the server cannot or will not process the request 
+        res.should.have.status(400);
+        done();
+      });
+  });
+
+  it('givenRegistrationDetails_whenNoemailId_shouldNotSaveInDB', (done) => {
+    const registartionDetails = registrationData.user.registrationWithNoemailId;
+    chai
+      .request(server)
+      .post('/registration')
+      .send(registartionDetails)
+      .end((err, res) => {
+          //the server cannot or will not process the request 
+        res.should.have.status(400);
+        done();
+      });
+  });
+
+  it('givenRegistrationDetails_whenNoemailId_shouldNotSaveInDB', (done) => {
+    const registartionDetails = registrationData.user.registrationWithNoPassword;
     chai
       .request(server)
       .post('/registration')
