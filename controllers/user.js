@@ -83,13 +83,13 @@ class Controller {
         if (error) {
           return res.status(400).send({
             success: false,
-            message: 'login failed',
-            error,
-          });
+          })
         }
         return res.status(200).send({
           success: true,
           message: 'logged in successfully',
+          // token: generatingToken(data),
+          // data,
         });
       });
     } catch (err) {

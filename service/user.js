@@ -5,6 +5,7 @@
 */
 const bcrypt = require('bcrypt');
 const models = require('../models/user');
+const helper = require('../utility/jwt_helper')
 
 
 class Service {
@@ -26,12 +27,14 @@ class Service {
     const { password } = data;
     models.login(data, (error, result) => {
       if (result) {
-        bcrypt.compare(password, result.password, (err, resultt) => {
-          if (err) {
+        bcrypt.compare(password, result.password, (error, result) => {
+          if (error) {
             callback(err, null);
           }
-          if (resultt) {
+          if (result) {
             callback(null, result);
+            // const token = helper.generatingToken({data})
+            // return (token) ? callback(null, token) : callback(err, null)
           } else {
             callback('Password does not match');
           }
