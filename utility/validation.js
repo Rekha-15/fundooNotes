@@ -1,6 +1,7 @@
-const Joi = require('joi');
-//const jwt = require('jsonwebtoken');
-require('dotenv').config();
+/* eslint-disable prefer-regex-literals */
+const Joi = require('joi')
+// const jwt = require('jsonwebtoken');
+require('dotenv').config()
 
 /**
  * @description   : validating all parameters we are getting from the user for registration
@@ -18,25 +19,28 @@ const authSchema = Joi.object({
     .pattern(new RegExp('^[A-Z]{1}[a-z]{2,}')),
 
   email: Joi.string()
-  .pattern(new RegExp('^[a-zA-Z0-9]+([+_.-][a-zA-Z0-9]+)*[@][a-zA-Z0-9]+[.][a-zA-Z]{2,4}([.][a-zA-Z]{2,4})?'))
+    .pattern(new RegExp('^[a-zA-Z0-9]+([+_.-][a-zA-Z0-9]+)*[@][a-zA-Z0-9]+[.][a-zA-Z]{2,4}([.][a-zA-Z]{2,4})?'))
     .required(),
-
-    password: Joi.string()
-    .required()
-    .pattern(new RegExp('^(?=.*[@#$%^&+=])(?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$'))
-    .required(),
-});
-
-const userLoginDetails = Joi.object({
-  email: Joi.string()
-  .pattern(new RegExp('^[a-zA-Z0-9]+([+_.-][a-zA-Z0-9]+)*[@][a-zA-Z0-9]+[.][a-zA-Z]{2,4}([.][a-zA-Z]{2,4})?'))
-  .required(),
 
   password: Joi.string()
     .required()
+    // eslint-disable-next-line prefer-regex-literals
     .pattern(new RegExp('^(?=.*[@#$%^&+=])(?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$'))
+    .required()
+})
+
+const userLoginDetails = Joi.object({
+  email: Joi.string()
+  // eslint-disable-next-line prefer-regex-literals
+    .pattern(new RegExp('^[a-zA-Z0-9]+([+_.-][a-zA-Z0-9]+)*[@][a-zA-Z0-9]+[.][a-zA-Z]{2,4}([.][a-zA-Z]{2,4})?'))
     .required(),
-});
+
+  password: Joi.string()
+    .required()
+    // eslint-disable-next-line prefer-regex-literals
+    .pattern(new RegExp('^(?=.*[@#$%^&+=])(?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$'))
+    .required()
+})
 
 // /**
 //  * @description   : creating token using jsonwebtoken module
@@ -49,11 +53,8 @@ const userLoginDetails = Joi.object({
 //   return token;
 // };
 
-
-
-
 module.exports = {
   authSchema,
-  userLoginDetails,
-  //generatingToken,
-};
+  userLoginDetails
+  // generatingToken,
+}

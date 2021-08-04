@@ -3,11 +3,10 @@
  * @file          : user.js
  * @author        : Rekha Patil
 */
-const controller = require('../controllers/user');
+const controller = require('../controllers/user')
 
 module.exports = (app) => {
-  app.post('/registration', controller.create);
+  app.post('/registration', controller.create)
 
-  app.post('/login', controller.login);
-
-};
+  app.post('/login', controller.login)
+}

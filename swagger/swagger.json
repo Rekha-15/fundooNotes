@@ -5,12 +5,11 @@
         "title": "FundooNote App",
         "description": "This app is build for storing notes",
         "license" : {
-            "name": "MIT",
+            "name": "MIT License",
             "url": "https://opensource.org/licenses/MIT"
         }        
     },
     "host": "localhost:5000",
-    "basePath": "/",
     "tags": [
         {
             "name": "FundooNotes",
@@ -35,7 +34,7 @@
                 "description": "Create a new user in the FundooNotes App",
                 "parameters": [
                     {
-                        "name": "register user",
+                        "name": "User Registration",
                         "in":"body",
                         "description": "User that we wants to create",
                         "schema": {
@@ -103,16 +102,21 @@
                 "type": "object",
                 "properties": {
                     "firstName": {
-                        "type": "string"
+                        "type": "string",
+                        "example": "Rekha"
                     },
                     "lastName": {
-                        "type": "string"
+                        "type": "string",
+                        "example": "Patil"
                     },
                     "email": {
-                        "type": "string"
+                        "type": "string",
+                        "example": "AbcdEfg.123@gmail.com"
                     },
                     "password": {
-                        "type": "string"
+                        "type": "string",
+                        "example": "Password@12"
+
                     }
                 }    
             },
