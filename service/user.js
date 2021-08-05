@@ -5,8 +5,6 @@
 */
 const bcrypt = require('bcrypt');
 const models = require('../models/user');
-const helper = require('../utility/jwt_helper')
-
 
 class Service {
   /**
@@ -33,8 +31,6 @@ class Service {
           }
           if (result) {
             callback(null, result);
-            // const token = helper.generatingToken({data})
-            // return (token) ? callback(null, token) : callback(err, null)
           } else {
             callback('Password does not match');
           }

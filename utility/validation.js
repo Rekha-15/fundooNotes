@@ -1,6 +1,7 @@
+/* eslint-disable semi */
 /* eslint-disable prefer-regex-literals */
 const Joi = require('joi')
-// const jwt = require('jsonwebtoken');
+const jwt = require('jsonwebtoken');
 require('dotenv').config()
 
 /**
@@ -42,19 +43,18 @@ const userLoginDetails = Joi.object({
     .required()
 })
 
-// /**
-//  * @description   : creating token using jsonwebtoken module
-//  * @param {data} as data which comes from the body of postmen
-//  * @module        : jwt
-// */
-// const generatingToken = (data) => {
-//   console.log(data);
-//   const token = jwt.sign({ email: data.email, id: data._id }, process.env.SECRET, { expiresIn: '24h' });
-//   return token;
-// };
+/**
+ * @description   : creating token using jsonwebtoken module
+ * @param {data} as data which comes from the body of postmen
+ * @module        : jwt
+*/
+const generatingToken = (data) => {
+  const token = jwt.sign({ email: data.email, password: data.password }, process.env.SECRET, { expiresIn: '24h' });
+  return token;
+};
 
 module.exports = {
   authSchema,
-  userLoginDetails
-  // generatingToken,
+  userLoginDetails,
+  generatingToken
 }

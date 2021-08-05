@@ -6,8 +6,7 @@
 */
 require('dotenv').config();
 const services = require('../service/user');
-//const jwt = require('jsonwebtoken');
-const { authSchema, userLoginDetails } = require('../utility/validation');
+const { authSchema, userLoginDetails, generatingToken } = require('../utility/validation');
 
 
 /**
@@ -83,15 +82,16 @@ class Controller {
         if (error) {
           return res.status(400).send({
             success: false,
+            error,
           })
         }
         return res.status(200).send({
           success: true,
           message: 'logged in successfully',
-          // token: generatingToken(data),
-          // data,
+          token: generatingToken(data),
         });
       });
+      
     } catch (err) {
       return res.status(500).send({
         success: false,
