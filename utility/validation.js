@@ -45,7 +45,7 @@ const userLoginDetails = Joi.object({
 
 /**
  * @description   : creating token using jsonwebtoken module
- * @param {data} as data which comes from the body of postmen
+ * @param {data} as data which comes from the body of postman
  * @module        : jwt
 */
 const generatingToken = (data) => {

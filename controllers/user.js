@@ -5,8 +5,11 @@
  * @author        : Rekha Patil
 */
 require('dotenv').config();
+const { exist } = require('joi');
+const logger = require('../logger/user');
 const services = require('../service/user');
 const { authSchema, userLoginDetails, generatingToken } = require('../utility/validation');
+
 
 
 /**
@@ -40,17 +43,21 @@ class Controller {
       }
       services.create(userDetails, (error, data) => {
         if (error) {
-          return res.status(400).send({
+          logger.error("Error while creating the user", error);
+          return res.status(409).send({
             success: false,
-            message: error,
+            message: 'User already exist',
           });
-        }
-        return res.status(200).send({
+        } else {
+          logger.info("User created successfully🥳",data);
+          res.status(201).send({
           success: true,
           message: 'created successfully',
         });
+      }
       });
     } catch (err) {
+      logger.error("Internal server error while registering new user", error);
       res.status(500).send({
         success: false,
         message: 'Internal server error',
@@ -71,6 +78,7 @@ class Controller {
       };
       const validationResult = userLoginDetails.validate(loginCredentials);
       if (validationResult.error) {
+        logger.error("Error while trying to login the user",error);
         res.status(400).send({
           success: false,
           message: 'Pass the proper format of all the fields',
@@ -80,11 +88,14 @@ class Controller {
       }
       services.login(loginCredentials, (error, data) => {
         if (error) {
-          return res.status(400).send({
+          logger.error("Error while trying to login the user",error);
+          return res.status(403).send({
             success: false,
+            message: 'please check email and password and try again',
             error,
           })
         }
+        logger.info("user logged in successfully😊", data);
         return res.status(200).send({
           success: true,
           message: 'logged in successfully',
@@ -93,6 +104,7 @@ class Controller {
       });
       
     } catch (err) {
+      logger.error("Error while trying to login the user",err);
       return res.status(500).send({
         success: false,
         message: 'Internal server error',

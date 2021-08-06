@@ -7,6 +7,9 @@
 */
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
+const logger = require('../logger/user');
+const { error } = require('../logger/user');
+const user = require('../controllers/user');
 
 const fundooNoteSchema = mongoose.Schema({
   firstName: { type: String, required: true },
@@ -50,6 +53,7 @@ class Model {
     });
     const user = await FundooNoteModel.findOne({ email: data.email });
     if (user) {
+      logger.error("User already exist", user)
       callback('User already exist');
     } else {
       const userData = await note.save();
@@ -62,11 +66,19 @@ class Model {
    * @param           : data, callback
   */
   login = (data, callback) => {
-    FundooNoteModel.findOne({ email: data.email })
-      .then((user) => {
-        callback(null, user);
-      });
-  }
+    FundooNoteModel.findOne(
+      { email: data.email },
+      (error, user) => {
+        if(error) {
+          logger.error("Error while finding user", error);
+          callback(null, user);
+        } else {
+          logger.info("User found", user);
+          callback(null, user);
+        }
+      }
+    );
+  };
 }
 
 

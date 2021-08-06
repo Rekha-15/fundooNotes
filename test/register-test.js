@@ -58,7 +58,7 @@ describe('registartion', () => {
   })
 
   // eslint-disable-next-line no-undef
-  it('givenRegistrationDetails_whenNoemailId_shouldNotSaveInDB', (done) => {
+  it('givenRegistrationDetails_whenNoPassword_shouldNotSaveInDB', (done) => {
     const registartionDetails = registrationData.user.registrationWithNoPassword
     chai
       .request(server)

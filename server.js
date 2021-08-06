@@ -15,6 +15,7 @@ require('dotenv').config()
 const bodyParser = require('body-parser')
 const swaggerUI = require('swagger-ui-express')
 const swaggerDoc = require('./swagger/swagger.json')
+const logger = require('./logger/user');
 
 // create express app
 const app = express()
@@ -63,7 +64,8 @@ require('./routes/users')(app)
 // listen on port 5000 for incoming connects
 // listen for requests
 app.listen(process.env.PORT, () => {
-  console.log(`Server is listening on port ${process.env.PORT}`)
-})
+  console.log(`Server is listening on port ${process.env.PORT}`);
+ // logger.log(`combined`,`Server is listening on port : ${process.env.PORT}`)
+ });
 
 module.exports = app
