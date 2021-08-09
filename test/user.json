@@ -1,10 +1,10 @@
 {
     "user": {
             "registration": {
-                "firstName": "Mahendra",
-                "lastName": "Doni",
-                "email": "Dhoni1215@gmail.com",
-                "password": "Dhonicool@15#"
+                "firstName": "Ramya",
+                "lastName": "Abcde",
+                "email": "RamyaCha3443@gmail.com",
+                "password": "Password@15"
             },
         "registrationWithNolastName": {
             "firstName": "Riya",

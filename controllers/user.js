@@ -111,6 +111,42 @@ class Controller {
       });
     }
   }
+
+  /**
+   * @description     : used when a user forgot his/her password
+   * @param {httprequest} : req
+   * @param {httpresponse} : res
+   * @method          : forgotPasssword
+   * @file            : user.js
+  */
+   forgotPassword = (req, res) => {
+    try {
+      const userCredential = {
+        email: req.body.email,
+      };
+      services.forgotPassword(userCredential, (error, result) => {
+        if (error) {
+          logger.error("Error while trying to find user email-id",error);
+          return res.status(400).send({
+            success: false,
+            message: 'failed to send email',
+            error,
+          });
+        }
+        logger.error("email found and sent link successfully😊",result);
+        return res.status(200).send({
+          success: true,
+          message: 'Email sent successfully',
+          result,
+        });
+      });
+    } catch (err) {
+      return res.status(500).send({
+        success: false,
+        message: 'Internal server error',
+      });
+    }
+  }
 }
     
 //exporting the class

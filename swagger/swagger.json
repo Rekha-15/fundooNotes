@@ -95,8 +95,35 @@
                     }
                 }
             }
+        },
+
+        "/forgotPassword": {
+            "post": {
+                "tags": [
+                    "FundooNotes"
+                ],
+                "summary": "Forgot Password",
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "forgot password"
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "sent mail successfully"
+                    },
+                    "400": {
+                        "description": "unable to send mail"
+                    }
+                }
+            }
         }
-    },   
+    },  
         "definitions": {
             "add": {
                 "type": "object",

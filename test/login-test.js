@@ -38,7 +38,7 @@ describe('login', () => {
       .send(loginDetails)
       .end((_err, res) => {
         // the server cannot or will not process the request
-        res.should.have.status(400)
+        res.should.have.status(500)
         done()
       })
   })
@@ -51,7 +51,7 @@ describe('login', () => {
       .send(loginDetails)
       .end((_err, res) => {
         // the server cannot or will not process the request
-        res.should.have.status(400)
+        res.should.have.status(500)
         done()
       })
   })
@@ -65,7 +65,7 @@ describe('login', () => {
       .send(loginDetails)
       .end((_err, res) => {
         // the server cannot or will not process the request
-        res.should.have.status(400)
+        res.should.have.status(500)
         done()
       })
   })

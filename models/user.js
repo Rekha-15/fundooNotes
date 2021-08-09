@@ -79,6 +79,18 @@ class Model {
       }
     );
   };
+
+  /**
+   * @description     : It uses to if a user forgot his/her password so send a mail
+   * @param           : data, callback
+  */
+   forgotPassword = (data, callback) => {
+    FundooNoteModel.findOne(
+      { email: data.email })
+      .then((dataOne) => {
+       callback(null, dataOne);
+      });
+  }
 }
 
 

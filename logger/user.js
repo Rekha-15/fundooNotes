@@ -1,3 +1,4 @@
+/* eslint-disable semi */
 /**
  * @description   : It is use create log files for successfull operation as well as for
  *                  failed operation.
@@ -16,13 +17,13 @@ const logger = winston.createLogger({
     // - Write all logs with level `info` and below to `combined.log`
     //
     new winston.transports.File({ filename: 'error.log', level: 'error' }),
-    new winston.transports.File({ filename: 'combined.log' }),
-  ],
+    new winston.transports.File({ filename: 'combined.log' })
+  ]
 });
 
 // displaying logger message in console
-    logger.add(new winston.transports.Console({
-      format: winston.format.simple(),
-    }));
+logger.add(new winston.transports.Console({
+  format: winston.format.simple()
+}));
 
-  module.exports = logger;
+module.exports = logger;

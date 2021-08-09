@@ -1,4 +1,4 @@
-const { off } = require('./server');
+// const { off } = require('./server')
 
 module.exports = {
   env: {
@@ -16,7 +16,7 @@ module.exports = {
     'linebreak-style': 0,
     'no-console': 0,
     'no-regex-spaces': 0,
-    'no-unexpected-multiline': 0,
-    "semi" : ["error", always]
+    'no-unexpected-multiline': 0
+    // "parser": "@babel/eslint-parser"
   }
 }

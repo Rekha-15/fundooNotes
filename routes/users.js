@@ -9,4 +9,6 @@ module.exports = (app) => {
   app.post('/registration', controller.create)
 
   app.post('/login', controller.login)
+
+  app.post('/forgotPassword', controller.forgotPassword)
 }

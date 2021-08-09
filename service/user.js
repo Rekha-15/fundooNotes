@@ -6,6 +6,7 @@
 const bcrypt = require('bcrypt');
 const logger = require('../logger/user');
 const models = require('../models/user');
+const { sendingEmail } = require('../utility/validation');
 
 class Service {
   /**
@@ -51,6 +52,29 @@ class Service {
       } else {
         logger.error("Error while trying to login the user",err);
         callback('user not found');
+      }
+    });
+  }
+
+  /**
+   * @description         : it acts as a midlleware for models and controllers
+   * @param    {data}     : taking data from controller
+   * @param   {callback}  : giving result to controller
+   * @method              : forgotPassword from models
+  */
+   forgotPassword = (data, callback) => {
+    models.forgotPassword(data, (error, result) => {
+      console.log(result);
+      if (result) {
+        logger.error("user emial exist🤗",result);
+        const details = {
+          email: result.email,
+          _id: result._id,
+        };
+        error ? callback(error, null) : callback(null, sendingEmail(details));
+      } else {
+        logger.error("user email not found😐",error);
+        callback('Email does not exist');
       }
     });
   }

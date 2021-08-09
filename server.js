@@ -1,6 +1,3 @@
-/* eslint-disable key-spacing */
-/* eslint-disable no-trailing-spaces */
-/* eslint-disable no-multiple-empty-lines */
 /**
  * @description   : It is use to establish the connection between the database and server
  * @package       : express.
@@ -15,13 +12,13 @@ require('dotenv').config()
 const bodyParser = require('body-parser')
 const swaggerUI = require('swagger-ui-express')
 const swaggerDoc = require('./swagger/swagger.json')
-const logger = require('./logger/user');
+const logger = require('./logger/user')
 
 // create express app
 const app = express()
 
 // parse requests of content-type - application/x-www-form-urlencoded
-app.use(bodyParser.urlencoded({ extended : true }))
+app.use(bodyParser.urlencoded({ extended: true }))
 
 // parse request of content-type - application/json
 app.use(bodyParser.json())
@@ -37,7 +34,7 @@ mongoose.Promise = global.Promise
 mongoose.connect(dbConfig.url, {
   useNewUrlParser: true
 }).then(() => {
-  console.log('Successfully connected to the database')    
+  console.log('Successfully connected to the database')
 }).catch(err => {
   console.log('Could not connect to the database. Exiting now...', err)
   process.exit()
@@ -60,12 +57,11 @@ app.get('/', (req, res) => {
 // Require Notes routes
 require('./routes/users')(app)
 
-
 // listen on port 5000 for incoming connects
 // listen for requests
 app.listen(process.env.PORT, () => {
-  console.log(`Server is listening on port ${process.env.PORT}`);
- // logger.log(`combined`,`Server is listening on port : ${process.env.PORT}`)
- });
+  console.log(`Server is listening on port ${process.env.PORT}`)
+// logger.log(`combined`,`Server is listening on port : ${process.env.PORT}`)
+})
 
 module.exports = app
