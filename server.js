@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /**
  * @description   : It is use to establish the connection between the database and server
  * @package       : express.

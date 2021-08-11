@@ -66,7 +66,7 @@ class Service {
     models.forgotPassword(data, (error, result) => {
       console.log(result);
       if (result) {
-        logger.error("user emial exist🤗",result);
+        logger.info("user email exist🤗",result);
         const details = {
           email: result.email,
           _id: result._id,
@@ -78,7 +78,10 @@ class Service {
       }
     });
   }
+
+  
 }
+
 
 //exporting the class
 module.exports = new Service();

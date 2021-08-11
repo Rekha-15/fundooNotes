@@ -28,13 +28,15 @@
         },
         "loginWithImproperDetails": {
             "email": "rekhapatil.1509@gmail.com",
-            "password": "password15"
+            "password": "passwor"
         },
 
-
-
-
-        
+        "forgotPasswordData": {
+            "email": "rekhapatil.1509@gmail.com"
+        },
+        "forgotPasswordWithImproperDetails": {
+            "email": "abc@gmail"
+        },
 
         "loginWithImproperemailId": {
             "email": "rekhapatil@gmail.com",

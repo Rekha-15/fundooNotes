@@ -1,10 +1,12 @@
-/* eslint-disable no-undef */
 /* eslint-disable no-unused-vars */
 /* eslint-disable prefer-regex-literals */
 const Joi = require('joi')
 const jwt = require('jsonwebtoken')
 const nodemailer = require('nodemailer')
 require('dotenv').config()
+const ejs = require('ejs')
+const fs = require("fs");
+const logger = require('../logger/user')
 
 /**
  * @description   : validating all parameters we are getting from the user for registration
@@ -44,11 +46,12 @@ const userLoginDetails = Joi.object({
 
 /**
  * @description   : creating token using jsonwebtoken module
- * @param {data} as data which comes from the body of postman
+ * @param {data} as data which comes from the body of postmen
  * @module        : jwt
 */
 const generatingToken = (data) => {
-  const token = jwt.sign({ email: data.email, password: data.password }, process.env.SECRET, { expiresIn: '24h' })
+  console.log(data)
+  const token = jwt.sign({ email: data.email, id: data._id }, process.env.SECRET, { expiresIn: '24h' })
   return token
 }
 
@@ -57,24 +60,13 @@ const generatingToken = (data) => {
  * @param {data}  : it contains the token which we want to verify and then sending to controller
  * @module        : jwt
 */
-// eslint-disable-next-line no-unused-vars
 const verifyingToken = (req, res, next) => {
-  try {
-    const tokenVerification = jwt.verify(req.headers.token, process.env.SECRET)
-    get('token', (err, result) => {
-      if (err) throw err
-      if (req.headers.token === result) {
-        req.userData = tokenVerification
-        const userId = tokenVerification.id
-        req.userId = userId
-      }
-      next()
+  const token = req.get('token')
+  return (token)
+    ? jwt.verify(token, process.env.SECRET, error => {
+      return (error) ? res.status(400).send({ success: false, message: 'Invalid Token' }) : next()
     })
-  } catch (err) {
-    res.status(401).send({
-      err: 'Unauthorized user'
-    })
-  }
+    : res.status(401).send({ success: false, message: 'Authorisation failed! Invalid user' })
 }
 
 /**
@@ -84,10 +76,33 @@ const verifyingToken = (req, res, next) => {
 */
 const sendingEmail = (data) => {
   const transporter = nodemailer.createTransport({
-    service: 'gmail',
+    host: 'smtp.gmail.com',
+    port: 465,
+   // secure: false,
+   //  requireTLS: true,
+   // service: 'gmail',
     auth: {
       user: process.env.EMAIL,
       pass: process.env.PASSWORD
+    }
+  })
+
+  ejs.renderFile('view/sendEmail.ejs', (error, result) => {
+    if (error) {
+      logger.log('error', error)
+    } else {
+      const message = {
+        from: process.env.EMAIL,
+        to: data.email,
+        subject: 'Re: Reset your password',
+        html: `${result}<button><a href="${'http://localhost:4200/resetPassword/'}${generatingToken(data)}">Click here</a></button>`
+
+      }
+
+      transporter.sendMail(message, (err, info) => {
+        const sendEmailInfo = err ? logger.log('error', err) : logger.log('info', info)
+        return sendEmailInfo
+      })
     }
   })
 }

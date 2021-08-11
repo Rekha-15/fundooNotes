@@ -91,8 +91,8 @@ class Model {
        callback(null, dataOne);
       });
   }
-}
 
+}
 
 //exporting the class        
 module.exports = new Model();

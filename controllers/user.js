@@ -126,17 +126,17 @@ class Controller {
       };
       services.forgotPassword(userCredential, (error, result) => {
         if (error) {
-          logger.error("Error while trying to find user email-id",error);
+           logger.error("Error while trying to find user email-id",error);
           return res.status(400).send({
             success: false,
             message: 'failed to send email',
             error,
           });
         }
-        logger.error("email found and sent link successfully😊",result);
+         logger.info("email found and sent link successfully😊",result);
         return res.status(200).send({
           success: true,
-          message: 'Email sent successfully',
+          message: 'User email id exist and Email sent successfully',
           result,
         });
       });
@@ -147,7 +147,9 @@ class Controller {
       });
     }
   }
-}
+ }
+
+
     
 //exporting the class
 module.exports = new Controller();
