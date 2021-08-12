@@ -4,7 +4,7 @@
  * @author        : Rekha Patil
 */
 const controller = require('../controllers/user')
-// const { verifyingToken } = require('../utility/validation')
+const { verifyingToken } = require('../utility/validation')
 
 module.exports = (app) => {
   app.post('/registration', controller.create)
@@ -13,5 +13,5 @@ module.exports = (app) => {
 
   app.post('/forgotPassword', controller.forgotPassword)
 
-  // app.post('/resetPassword/:token', verifyingToken, controller.resetPassword)
+  app.post('/resetPassword/:token', verifyingToken, controller.resetPassword)
 }

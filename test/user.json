@@ -3,7 +3,7 @@
             "registration": {
                 "firstName": "Ramya",
                 "lastName": "Abcde",
-                "email": "RamyaCha3443@gmail.com",
+                "email": "RamyaCha390443@gmail.com",
                 "password": "Password@15"
             },
         "registrationWithNolastName": {
@@ -22,31 +22,32 @@
             "email": "Nammushree.12@gmail.com"
         },
 
-        "login": {
-            "email": "rekhapatil.1509@gmail.com",
-            "password": "Password@15#"
+        "userLoginPos": {
+            "email": "patilrekha.1206@gmail.com",
+            "password": "Password@12"
         },
-        "loginWithImproperDetails": {
-            "email": "rekhapatil.1509@gmail.com",
-            "password": "passwor"
+    
+        "userLoginNegEmail": {
+            "email": "rekhapat@gmail",
+            "password": "Password@12"
+        },
+    
+        "userLoginEmpPassword": {
+            "email": "patilrekha.1206@gmail.com",
+            "password": ""
+        },
+    
+        "userLoginNegPassword": {
+            "email": "sanketh.babbur11@gmail.com",
+            "password": "password"
         },
 
-        "forgotPasswordData": {
+        "userForgotPasswordPos": {
             "email": "rekhapatil.1509@gmail.com"
         },
-        "forgotPasswordWithImproperDetails": {
-            "email": "abc@gmail"
-        },
-
-        "loginWithImproperemailId": {
-            "email": "rekhapatil@gmail.com",
-            "password": "Password@15#"
-        },
-
-        "loginWithImproperepassword": {
-            "email": "rekhapatil.1509@gmail.com",
-            "password": "Password@#"
-            
+    
+        "userForgotPasswordNegNonRegistered": {
+            "email": "rekhapatil@gmail.com"
         }
     }
 }

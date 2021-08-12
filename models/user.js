@@ -92,6 +92,20 @@ class Model {
       });
   }
 
+  /**
+   * @description     : It uses to if a user wants to reset his/her password
+   * @param    {data} : taking from service
+   * @param  {callback}: giving result back to service
+   * @method          : findOneAndUpdate to update password with new one
+  */
+   resetPassword = async (data, callback) => {
+    const salt = await bcrypt.genSalt(10);
+    const encrypt = await bcrypt.hash(data.password, salt);
+    FundooNoteModel.findOneAndUpdate({ email: data.email }, { password: encrypt })
+      .then((credential) => {
+        callback(null, credential);
+      });
+  }
 }
 
 //exporting the class        

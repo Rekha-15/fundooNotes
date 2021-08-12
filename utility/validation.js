@@ -5,7 +5,6 @@ const jwt = require('jsonwebtoken')
 const nodemailer = require('nodemailer')
 require('dotenv').config()
 const ejs = require('ejs')
-const fs = require("fs");
 const logger = require('../logger/user')
 
 /**
@@ -76,11 +75,7 @@ const verifyingToken = (req, res, next) => {
 */
 const sendingEmail = (data) => {
   const transporter = nodemailer.createTransport({
-    host: 'smtp.gmail.com',
-    port: 465,
-   // secure: false,
-   //  requireTLS: true,
-   // service: 'gmail',
+    service: 'gmail',
     auth: {
       user: process.env.EMAIL,
       pass: process.env.PASSWORD
@@ -95,7 +90,7 @@ const sendingEmail = (data) => {
         from: process.env.EMAIL,
         to: data.email,
         subject: 'Re: Reset your password',
-        html: `${result}<button><a href="${'http://localhost:4200/resetPassword/'}${generatingToken(data)}">Click here</a></button>`
+        html: `${result}<button><a href="${'https://localhost:4200/resetPassword/'}${generatingToken(data)}">Click here</a></button>`
 
       }
 

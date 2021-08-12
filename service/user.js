@@ -79,7 +79,15 @@ class Service {
     });
   }
 
-  
+  /**
+   * @description         : it acts as a midlleware for models and controllers
+   * @param    {data}     : taking data from controller
+   * @param   {callback}  : giving result to controller
+   * @method              : resetPassword from models
+  */
+   resetPassword = (data, callback) => {
+    models.resetPassword(data, callback);
+  }
 }
 
 

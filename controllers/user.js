@@ -147,9 +147,43 @@ class Controller {
       });
     }
   }
- }
 
-
+  /**
+   * @description     : used when a user forgot his/her password
+   * @param {httprequest} : req
+   * @param {httpresponse} : res
+   * @method          : resetPassword
+   * @package         : jwt
+   * @file            : user.js
+  */
+   resetPassword = (req, res) => {
+    try {
+      const userCredential = {
+        password: req.body.password,
+        email: req.userData.email,
+      };
+      services.resetPassword(userCredential, (error, result) => {
+        if (error) {
+          return res.status(400).send({
+            success: false,
+            message: 'failed reset the password',
+            error,
+          });
+        }
+        return res.status(200).send({
+          success: true,
+          message: 'password changed successfully',
+          result,
+        });
+      });
+    } catch (err) {
+      return res.status(401).send({
+        success: false,
+        message: 'Token expired or invalid token',
+      });
+    }
+  }
+}
     
 //exporting the class
 module.exports = new Controller();
