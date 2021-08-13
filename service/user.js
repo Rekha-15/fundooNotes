@@ -6,7 +6,7 @@
 const bcrypt = require('bcrypt');
 const logger = require('../logger/user');
 const models = require('../models/user');
-const { sendingEmail } = require('../utility/validation');
+const { sendingEmail, getEmailFromToken  } = require('../utility/validation');
 
 class Service {
   /**
@@ -85,9 +85,28 @@ class Service {
    * @param   {callback}  : giving result to controller
    * @method              : resetPassword from models
   */
-   resetPassword = (data, callback) => {
-    models.resetPassword(data, callback);
-  }
+   resetPassword = (userInput, callback) => {
+    try{
+    var email = getEmailFromToken(userInput.token)
+    var inputData = {
+        email: email,
+        password: userInput.password
+    }
+
+    models.resetPassword(inputData, (error, data) =>{
+        if(error){
+            logger.error("Some error occured while updating password", error)
+            callback(error, null)
+         }else{
+             logger.info("Password has been reset successfully", data)
+            callback(null, data)
+         } 
+    })
+    }catch(error){
+        return callback(error, null)
+    }
+    
+}
 }
 
 

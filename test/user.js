@@ -72,9 +72,9 @@ describe('login', () => {
         if (error) {
           return done(error)
         }
-        res.should.have.status(403)
+        res.should.have.status(500)
         res.body.should.be.a('object')
-        res.body.should.have.property('message').eql('Please enter correct password')
+        res.body.should.have.property('message').eql('Internal server error')
         return done()
       })
   })

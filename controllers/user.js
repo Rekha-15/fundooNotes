@@ -159,24 +159,28 @@ class Controller {
    resetPassword = (req, res) => {
     try {
       const userCredential = {
+        token: req.headers.token,
         password: req.body.password,
-        email: req.userData.email,
       };
       services.resetPassword(userCredential, (error, result) => {
         if (error) {
-          return res.status(400).send({
+          logger.error("Error while resetting the password", error);
+          res.status(400).send({
             success: false,
             message: 'failed reset the password',
             error,
           });
-        }
-        return res.status(200).send({
+        } else {
+          logger.info("Password reset successfully", result)
+          res.status(200).send({
           success: true,
           message: 'password changed successfully',
-          result,
+          result:  result,
         });
-      });
+      }
+     });
     } catch (err) {
+      logger.error("Error while resetting the password", err);
       return res.status(401).send({
         success: false,
         message: 'Token expired or invalid token',

@@ -13,5 +13,5 @@ module.exports = (app) => {
 
   app.post('/forgotPassword', controller.forgotPassword)
 
-  app.post('/resetPassword/:token', verifyingToken, controller.resetPassword)
+  app.put('/resetPassword', controller.resetPassword)
 }

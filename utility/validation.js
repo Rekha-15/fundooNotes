@@ -60,12 +60,22 @@ const generatingToken = (data) => {
  * @module        : jwt
 */
 const verifyingToken = (req, res, next) => {
-  const token = req.get('token')
-  return (token)
-    ? jwt.verify(token, process.env.SECRET, error => {
-      return (error) ? res.status(400).send({ success: false, message: 'Invalid Token' }) : next()
+  try {
+    const tokenVerification = jwt.verify(req.headers.token, process.env.SECRET)
+      .get('token', (err, result) => {
+        if (err) throw err
+        if (req.headers.token === result) {
+          req.userData = tokenVerification
+          const userId = tokenVerification.id
+          req.userId = userId
+        }
+        next()
+      })
+  } catch (err) {
+    res.status(401).send({
+      err: 'Unauthorized user'
     })
-    : res.status(401).send({ success: false, message: 'Authorisation failed! Invalid user' })
+  }
 }
 
 /**
@@ -90,7 +100,7 @@ const sendingEmail = (data) => {
         from: process.env.EMAIL,
         to: data.email,
         subject: 'Re: Reset your password',
-        html: `${result}<button><a href="${'https://localhost:4200/resetPassword/'}${generatingToken(data)}">Click here</a></button>`
+        html: `${result}<h4><a href="${'http://localhost:5000/resetPassword/'}${generatingToken(data)}">Click here</a></h4>`
 
       }
 
@@ -102,10 +112,17 @@ const sendingEmail = (data) => {
   })
 }
 
+getEmailFromToken = (token) => {
+  const decoded = jwt.verify(token, process.env.SECRET);
+  return decoded.email
+}
+
+
 module.exports = {
   authSchema,
   userLoginDetails,
   generatingToken,
   verifyingToken,
-  sendingEmail
+  sendingEmail,
+  getEmailFromToken
 }
