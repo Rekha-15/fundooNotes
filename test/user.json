@@ -3,7 +3,7 @@
             "registration": {
                 "firstName": "Ramya",
                 "lastName": "Abcde",
-                "email": "Ramyabk.00@gmail.com",
+                "email": "Ramyabk.0120@gmail.com",
                 "password": "Password@15"
             },
         "registrationWithNolastName": {
@@ -48,6 +48,18 @@
     
         "userForgotPasswordNegNonRegistered": {
             "email": "rekhapatil@gmail.com"
-        }
+        },
+
+        "userResetPasswordPos": {
+            "password": "MyNewestPassword@11"
+        },
+    
+        "userResetPasswordNeg": {
+            "password": "MyNewestPassword@11"
+
+        },
+    
+        "userResetPasswordToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InJla2hhcGF0aWwuMTUwOUBnbWFpbC5jb20iLCJpZCI6IjYxMTMyNDViNDUwNTdmMWNhMDVjYjZiOCIsImlhdCI6MTYyODkyMDc0MywiZXhwIjoxNjI5MDA3MTQzfQ.kOThCVCoDuOqeY7diS4K2Mx8Z8xXRjpiS2gMvMxyIp0",
+        "userResetWrongPasswordToken": "eyJhbGciOiJIUzI1NiIsInR5c.eyJlbWFpbCI6I"
     }
 }

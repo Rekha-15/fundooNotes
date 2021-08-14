@@ -18,5 +18,5 @@ module.exports = {
     'no-regex-spaces': 0,
     'no-unexpected-multiline': 0
   },
-  "parser": "@babel/eslint-parser"
+   "parser": "@babel/eslint-parser"
 }

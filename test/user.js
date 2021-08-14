@@ -186,3 +186,63 @@ describe('forgotPassword', () => {
       })
   })
 })
+
+/**
+ * PUT request test
+ * Positive and Negative - Reset Password of User Testing
+ */
+describe('PUT /resetPassword', () => {
+  it('givenTokenAndPassword_whenProper_shouldResetPassword', (done) => {
+    const userData = userInputs.user.userResetPasswordPos
+    const userToken = userInputs.user.userResetPasswordToken
+    chai.request(server)
+      .put('/resetPassword')
+      .set('token', userToken)
+      .send(userData)
+      .end((error, res) => {
+        if (error) {
+          return done(error)
+        }
+        res.should.have.status(200)
+        res.body.should.be.a('object')
+        res.body.should.have.property('success').eql(true)
+        res.body.should.have.property('message').eql('password changed successfully')
+        return done()
+      })
+  })
+
+  it('givenToken_whenEmpty_shouldNotResetPassword', (done) => {
+    const userData = userInputs.user.userResetPasswordNeg
+    chai.request(server)
+      .put('/resetPassword')
+      .set('headerParameter', '')
+      .send(userData)
+      .end((error, res) => {
+        if (error) {
+          return done('Token should be empty')
+        }
+        res.should.have.status(400)
+        res.body.should.be.a('object')
+        res.body.should.have.property('message').eql('failed reset the password')
+        return done()
+      })
+  })
+
+  it('givenToken_whenImproper_shouldNotResetPassword', (done) => {
+    const userData = userInputs.userResetPasswordPos
+    const userToken = userInputs.user.userResetWrongPasswordToken
+    chai.request(server)
+      .put('/resetPassword')
+      .set('token', userToken)
+      .send(userData)
+      .end((error, res) => {
+        if (error) {
+          return done('Should pass invalid token')
+        }
+        res.should.have.status(400)
+        res.body.should.be.a('object')
+        res.body.should.have.property('message').eql('failed reset the password')
+        return done()
+      })
+  })
+})
