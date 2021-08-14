@@ -87,8 +87,8 @@ class Service {
   */
    resetPassword = (userInput, callback) => {
     try{
-    var email = getEmailFromToken(userInput.token)
-    var inputData = {
+    const email = getEmailFromToken(userInput.token)
+    const inputData = {
         email: email,
         password: userInput.password
     }

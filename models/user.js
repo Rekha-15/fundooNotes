@@ -94,22 +94,15 @@ class Model {
 
   /**
    * @description     : It uses to if a user wants to reset his/her password
-   * @param    {data} : taking from service
+   * @param    {inputData} : taking from service
    * @param  {callback}: giving result back to service
    * @method          : findOneAndUpdate to update password with new one
   */
-  //  resetPassword = async (data, callback) => {
-  //   const salt = await bcrypt.genSalt(10);
-  //   const encrypt = await bcrypt.hash(data.password, salt);
-  //   FundooNoteModel.findOneAndUpdate({ email: data.email }, { password: encrypt })
-  //     .then((credential) => {
-  //       callback(null, credential);
-  //     });
-  // }
+  
   resetPassword = async(inputData, callback) =>{
     try{
-        let data = await FundooNoteModel.findOne({email: inputData.email})
-        let hash = bcrypt.hashSync(inputData.password,10,(error, hashPassword) =>{
+        const data = await FundooNoteModel.findOne({email: inputData.email})
+        const hash = bcrypt.hashSync(inputData.password,10,(error, hashPassword) =>{
             return error? error: hashPassword
         })
         FundooNoteModel.findOneAndUpdate({ email: data.email }, {password: hash},(error, data) => {

@@ -55,26 +55,29 @@ const generatingToken = (data) => {
 }
 
 /**
- * @description   : veryfying token using jsonwebtoken module
- * @param {data}  : it contains the token which we want to verify and then sending to controller
- * @module        : jwt
+* @description function checks and validates the user token and authorises only if token is correct
+* @param {*} req
+* @param {*} res
+* @param {*} next
+* @returns
 */
+
 const verifyingToken = (req, res, next) => {
+  const token = req.get('token')
   try {
-    const tokenVerification = jwt.verify(req.headers.token, process.env.SECRET)
-      .get('token', (err, result) => {
-        if (err) throw err
-        if (req.headers.token === result) {
-          req.userData = tokenVerification
-          const userId = tokenVerification.id
-          req.userId = userId
+    if (token) {
+      jwt.verify(token, process.env.SECRET_TOKEN, error => {
+        if (error) {
+          return res.status(400).send({ success: false, message: 'Invalid Token' })
+        } else {
+          next()
         }
-        next()
       })
-  } catch (err) {
-    res.status(401).send({
-      err: 'Unauthorized user'
-    })
+    } else {
+      return res.status(401).send({ success: false, message: 'Authorisation failed! Invalid user' })
+    }
+  } catch (error) {
+    return res.status(500).send({ success: false, message: 'Something went wrong!' })
   }
 }
 
@@ -99,9 +102,9 @@ const sendingEmail = (data) => {
       const message = {
         from: process.env.EMAIL,
         to: data.email,
-        subject: 'Re: Reset your password',
-        html: `${result}<h4><a href="${'http://localhost:5000/resetPassword/'}${generatingToken(data)}">Click here</a></h4>`
-
+        subject: 'Re: Reset your password', 
+        html: `${result} <p>${process.env.PASSWORD_URL}${generatingToken(data)}</p>`
+       // html: `${result}<button><a href="${process.env.PASSWORD_URL}${generatingToken(data)}">Click here</a></button>`
       }
 
       transporter.sendMail(message, (err, info) => {
@@ -113,10 +116,9 @@ const sendingEmail = (data) => {
 }
 
 getEmailFromToken = (token) => {
-  const decoded = jwt.verify(token, process.env.SECRET);
+  const decoded = jwt.verify(token, process.env.SECRET)
   return decoded.email
 }
-
 
 module.exports = {
   authSchema,
