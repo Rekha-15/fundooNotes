@@ -6,6 +6,7 @@ const nodemailer = require('nodemailer')
 require('dotenv').config()
 const ejs = require('ejs')
 const logger = require('../logger/user')
+const bcrypt = require('bcrypt')
 
 /**
  * @description   : validating all parameters we are getting from the user for registration
@@ -43,15 +44,56 @@ const userLoginDetails = Joi.object({
     .required()
 })
 
+const checkIdField = Joi.object({
+
+  noteId: Joi.string()
+    .required(),
+
+  userId: Joi.string()
+    .required(),
+});
+
+const updateNoteField = Joi.object({
+  title: Joi.string()
+    .required(),
+
+  description: Joi.string()
+    .required(),
+
+  noteId: Joi.string()
+    .required(),
+});
+
 /**
  * @description   : creating token using jsonwebtoken module
  * @param {data} as data which comes from the body of postmen
  * @module        : jwt
 */
-const generatingToken = (data) => {
-  console.log(data)
-  const token = jwt.sign({ email: data.email, id: data._id }, process.env.SECRET, { expiresIn: '24h' })
-  return token
+ const generatingToken = (data) => {
+   console.log(data)
+   return jwt.sign({ data }, process.env.SECRET, { expiresIn: '24h' })
+ }
+
+
+// /**
+// * @description authorizes the user only if the token is validated
+// * @param {*} req 
+// * @param {*} res 
+// * @param {*} next 
+// * @returns 
+// */
+// const verifyingToken = (req, res, next) => {
+// let token = req.get('token');
+// return(token)?
+// jwt.verify(token, process.env.SECRET_KEY, error =>{
+//   return (error) ? res.status(400).send({message: "Invalid Token"}):next();
+// }) : 
+// res.status(401).send({message: "Missing token! Unauthorized User!"})
+// }
+
+bcryptAuthentication = (loginPassword, databasePassword) => {
+  let result = bcrypt.compareSync(loginPassword, databasePassword)
+  return (loginPassword && databasePassword) ? result : false;
 }
 
 /**
@@ -63,10 +105,10 @@ const generatingToken = (data) => {
 */
 
 const verifyingToken = (req, res, next) => {
-  const token = req.get('token')
+  let token = req.get('token')
   try {
     if (token) {
-      jwt.verify(token, process.env.SECRET_TOKEN, error => {
+      jwt.verify(token, process.env.SECRET, error => {
         if (error) {
           return res.status(400).send({ success: false, message: 'Invalid Token' })
         } else {
@@ -84,7 +126,7 @@ const verifyingToken = (req, res, next) => {
 /**
  * @description   : sending an email through nodemailer
  * @module        : nodemailer, ejs
- * @file          : helper.js
+ * @file          : validation.js
 */
 const sendingEmail = (data) => {
   const transporter = nodemailer.createTransport({
@@ -126,5 +168,8 @@ module.exports = {
   generatingToken,
   verifyingToken,
   sendingEmail,
-  getEmailFromToken
+  getEmailFromToken,
+  checkIdField,
+  updateNoteField,
+  bcryptAuthentication
 }

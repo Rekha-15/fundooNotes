@@ -21,9 +21,9 @@ const logger = winston.createLogger({
   ]
 });
 
-// displaying logger message in console
-logger.add(new winston.transports.Console({
-  format: winston.format.simple()
-}));
+//  displaying logger message in console
+ logger.add(new winston.transports.Console({
+   format: winston.format.simple()
+ }));
 
 module.exports = logger;
