@@ -160,128 +160,147 @@
                 }
             }
         },
-        "/notesCreate": {
+        "/createNotes": {
             "post": {
-                "tags": [
-                    "FundooNotes"
-                ],
-                "summary": "Create notes in FundooNotes",
-                "parameters": [
-                    {
-                        "in": "body",
-                        "name": "body",
-                        "description": "craete note"
-                    },
-                    {
-                        "in": "header",
-                        "name": "token",
-                        "description": "an authorization token",
-                        "required": true
+                "tags": ["Notes"],
+                "description": "creating notes",
+                "parameters": [{
+                    "name": "create notes",
+                    "in": "body",
+                    "required": true,
+                    "schema": {
+                        "$ref": "#/definitions/Notes"
                     }
-                ],
-                "produces": [
-                    "application/json"
-                ],
+                }],
                 "responses": {
-                    "200": {
-                        "description": "note created successfully"
+                    "201": {
+                        "description": "Registered"
                     },
                     "400": {
-                        "description": "failed to create note"
-                    }
-                }
-            },
-            "get": {
-                "tags": [
-                    "FundooNotes"
-                ],
-                "summary": "Get all notes from FundooNotes",
-                "parameters": [
-                    {
-                        "in": "header",
-                        "name": "token",
-                        "description": "an authorization token",
-                        "required": true
-                    }
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "responses": {
-                    "200": {
-                        "description": "got all notes successfully"
+                        "description": "Bad Request"
                     },
-                    "400": {
-                        "description": "failed to get notes"
+                    "500": {
+                        "description": "Internal Server Error"
                     }
-                }
+                },
+                "security": [{
+                    "JWT": []
+                }]
             }
         },
-        "/notes/{id}":{
-            "parameters": [
-                {
-                    "name": "id",
-                    "in": "path",
-                    "required": true,
-                    "description": "ID of the person that we want to see",
-                    "type":"string"
-                }
-            ],
-            "put": {
-                "tags": [
-                    "FundooNotes"
-                ],
-                "summary": "Update note in FundooNotes",
-                "parameters": [
-                    {
-                        "in": "body",
-                        "name": "body",
-                        "description": "update an existing note"
-                    },
-                    {
-                        "in": "header",
-                        "name": "token",
-                        "description": "an authorization token",
-                        "required": true
-                    }
-                ],
-                "produces": [
-                    "application/json"
-                ],
+        "/notes/{notes}": {
+            "get": {
+                "tags": ["Notes"],
+                "description": "get notes",
+                "parameters": [],
                 "responses": {
                     "200": {
-                        "description": "updated note successfully"
+                        "description": "Successful"
                     },
                     "400": {
-                        "description": "failed to update note"
-                    }
-                }
-            },
-            "delete": {
-                "tags": [
-                    "FundooNotes"
-                ],
-                "summary": "delete note from FundooNotes and change the value of trash to true",
-                "parameters": [
-                    {
-                        "in": "header",
-                        "name": "token",
-                        "description": "an authorization token",
-                        "required": true
-                    }
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "responses": {
-                    "200": {
-                        "description": "deleted note successfully"
+                        "description": "Bad Request"
                     },
-                    "400": {
-                        "description": "failed to delete notes"
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
                     }
-                }
+                },
+                "security": [{
+                    "JWT": []
+                }]
             }
+        },
+        "/note/{notesId}": {
+            "put": {
+                "tags": ["Notes"],
+                "description": "update note using ID",
+                "parameters": [{
+                        "name": "notesId",
+                        "in": "path",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "new NotesDetails",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/Notes"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                },
+                "security": [{
+                    "JWT": []
+                }]
+
+            }
+        },
+        "/delete/{:notesId}": {
+            "delete": {
+                "tags": ["Notes"],
+                "description": "delete note using ID",
+                "parameters": [{
+                        "name": "notesId",
+                        "in": "path",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "delete description",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/DeleteNote"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                },
+                "security": [{
+                    "JWT": []
+                }]
+            }
+        }
+    },
+    "securityDefinitions": {
+        "JWT": {
+            "type": "apiKey",
+            "name": "token",
+            "in": "Headers"
         }
     },
         "definitions": {
@@ -331,6 +350,25 @@
                 "properties": {
                     "password": {
                         "type": "string"
+                    }
+                }
+            },
+            "Notes": {
+                "type": "object",
+                "properties": {
+                    "title": {
+                        "type": "string"
+                    },
+                    "description": {
+                        "type": "string"
+                    }
+                }
+            },
+            "DeleteNote": {
+                "type": "object",
+                "properties": {
+                    "isDeleted": {
+                        "type": "boolean"
                     }
                 }
             }

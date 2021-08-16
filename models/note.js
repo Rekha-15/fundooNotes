@@ -28,12 +28,11 @@ class NoteModels {
     const note = new NoteModel({
       title: data.title,
       description: data.description,
-       userId: data.userId,
+     //  userId: data.userId,
     });
     note.save()
       .then((dataOne) => {
         callback(null, dataOne);
-        console.log(dataone)
       });
   }
 

@@ -18,12 +18,12 @@ module.exports = (app) => {
 
   app.put('/resetPassword', controller.resetPassword)
 
-  app.post('/notesCreate', verifyingToken, noteController.createNote);
+  app.post('/createNotes', verifyingToken, noteController.createNote);
 
-  app.put('/notes/:noteId', verifyingToken, noteController.updateNote);
+  app.put('/note/:notesId', verifyingToken, noteController.updateNote);
 
-  app.get('/notes', verifyingToken,  noteController.getAllNotes);
+  app.get('/notes/:notes', verifyingToken,  noteController.getAllNotes);
 
-  app.delete('/notes/:noteId', verifyingToken, noteController.deleteNote);
+  app.delete('/delete/:notesId', verifyingToken, noteController.deleteNote);
 
 }

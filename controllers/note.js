@@ -5,7 +5,6 @@
 */
 require('dotenv').config();
 const services = require('../service/note');
-const { checkIdField, updateNoteField } = require('../utility/validation');
 
 class NoteController {
   /**
@@ -55,15 +54,6 @@ class NoteController {
         description: req.body.description,
          noteId: req.params.noteId,
       };
-      const checkField = updateNoteField.validate(noteData);
-      if (checkField.error) {
-        res.status(400).send({
-          success: false,
-          message: 'the field can not be empty which you want to update in note',
-          data: checkField,
-        });
-        return;
-      }
       services.updateNote(noteData, (error) => {
         if (error) {
           return res.status(400).send({

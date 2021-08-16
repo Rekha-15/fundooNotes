@@ -54,11 +54,11 @@ const checkIdField = Joi.object({
 });
 
 const updateNoteField = Joi.object({
-  title: Joi.string()
-    .required(),
+  // title: Joi.string()
+  //   .required(),
 
-  description: Joi.string()
-    .required(),
+  // description: Joi.string()
+  //   .required(),
 
   noteId: Joi.string()
     .required(),
