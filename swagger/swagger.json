@@ -191,7 +191,7 @@
                     }
                 }
             },
-            "notesAll": {
+            "get": {
                 "tags": [
                     "FundooNotes"
                 ],
@@ -217,7 +217,7 @@
                 }
             }
         },
-        "/notes/{:noteId}":{
+        "/notes/{id}":{
             "parameters": [
                 {
                     "name": "id",
@@ -257,7 +257,7 @@
                     }
                 }
             },
-            "deleteNotes/:noteId": {
+            "delete": {
                 "tags": [
                     "FundooNotes"
                 ],

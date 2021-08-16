@@ -74,23 +74,6 @@ const updateNoteField = Joi.object({
    return jwt.sign({ data }, process.env.SECRET, { expiresIn: '24h' })
  }
 
-
-// /**
-// * @description authorizes the user only if the token is validated
-// * @param {*} req 
-// * @param {*} res 
-// * @param {*} next 
-// * @returns 
-// */
-// const verifyingToken = (req, res, next) => {
-// let token = req.get('token');
-// return(token)?
-// jwt.verify(token, process.env.SECRET_KEY, error =>{
-//   return (error) ? res.status(400).send({message: "Invalid Token"}):next();
-// }) : 
-// res.status(401).send({message: "Missing token! Unauthorized User!"})
-// }
-
 bcryptAuthentication = (loginPassword, databasePassword) => {
   let result = bcrypt.compareSync(loginPassword, databasePassword)
   return (loginPassword && databasePassword) ? result : false;

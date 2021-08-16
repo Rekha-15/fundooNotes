@@ -19,7 +19,7 @@ class NoteController {
       const noteDetails = {
         title: req.body.title,
         description: req.body.description,
-        // userId: req.userId,
+         userId: req.userId,
       };
       services.createNote(noteDetails, (error, data) => {
         if (error) {
@@ -53,7 +53,7 @@ class NoteController {
       const noteData = {
         title: req.body.title,
         description: req.body.description,
-        // noteId: req.params.noteId,
+         noteId: req.params.noteId,
       };
       const checkField = updateNoteField.validate(noteData);
       if (checkField.error) {

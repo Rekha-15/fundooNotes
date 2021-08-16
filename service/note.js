@@ -4,7 +4,6 @@
  * @author        : Rekha
 */
 const models = require('../models/note');
-// const { setRedis } = require('../utility/redisCache');
 
 class Service {
   /**
@@ -32,13 +31,11 @@ class Service {
    * @returns       : notes which we are fetching
   */
   getAllNotes = (data, callback) => {
-    const KEY = 'notes';
     models.getAllNotes(data, (error, result) => {
       console.log('comming to service');
       if (error) {
         callback(error, null);
       } else {
-        setRedis(KEY, result);
         callback(null, result);
       }
     });
