@@ -18,12 +18,7 @@ module.exports = (app) => {
 
   app.put('/resetPassword', controller.resetPassword)
 
-  app.post('/createNotes', verifyingToken, noteController.createNote);
-
-  app.put('/note/:notesId', verifyingToken, noteController.updateNote);
-
-  app.get('/notes/:notes', verifyingToken,  noteController.getAllNotes);
-
-  app.delete('/delete/:notesId', verifyingToken, noteController.deleteNote);
+  //notes creation api - POST request
+  app.post('/createNotes', verifyingToken, noteController.createNotes)
 
 }

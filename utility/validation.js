@@ -44,23 +44,11 @@ const userLoginDetails = Joi.object({
     .required()
 })
 
-const checkIdField = Joi.object({
-
-  noteId: Joi.string()
+const notesCreationValidation = Joi.object({
+  title: Joi.string()
     .required(),
 
-  userId: Joi.string()
-    .required(),
-});
-
-const updateNoteField = Joi.object({
-  // title: Joi.string()
-  //   .required(),
-
-  // description: Joi.string()
-  //   .required(),
-
-  noteId: Joi.string()
+  description: Joi.string()
     .required(),
 });
 
@@ -152,7 +140,6 @@ module.exports = {
   verifyingToken,
   sendingEmail,
   getEmailFromToken,
-  checkIdField,
-  updateNoteField,
+  notesCreationValidation,
   bcryptAuthentication
 }

@@ -6,7 +6,7 @@
 const bcrypt = require('bcrypt');
 const logger = require('../logger/user');
 const models = require('../models/user');
-// const { sendingEmail, getEmailFromToken  } = require('../utility/validation');
+const { sendingEmail, getEmailFromToken  } = require('../utility/validation');
 const { bcryptAuthentication, generatingToken } = require('../utility/validation')
 
 class Service {
