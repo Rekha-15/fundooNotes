@@ -1,4 +1,5 @@
 const notesModel = require('../models/note');
+logger = require('../logger/user');
 
 class NotesService {
     /**
@@ -49,8 +50,7 @@ class NotesService {
     deleteNoteById = (notesId) => {
       return new Promise(function (resolve, reject) {
         try {
-          notesModel
-            .deleteNoteById(notesId)
+          notesModel.deleteNoteById(notesId)
             .then((note) => {
               logger.info("Note deleted successfully!", note);
               resolve(note);

@@ -1,5 +1,7 @@
 const notesService = require('../service/note');
 const {notesCreationValidation} = require('../utility/validation');
+logger = require('../logger/user');
+
 
 class NotesController {
     /**
@@ -82,14 +84,13 @@ class NotesController {
     // finding note and updating it with the request body
       deleteNotesById = (req, res) => {
         try {
-          notesService
-          service
-        .deleteNoteById(req.params.noteId)
+          console.log(req.params)
+          notesService.deleteNoteById(req.params)
         .then((note) => {
           if (!note) {
             return res.status(404).send({
               success: false,
-              message: "Note not found with id " + req.params.noteId,
+              message: "Note not found with id " + req.params,
             });
           }
           res.send({

@@ -254,15 +254,15 @@
 
             }
         },
-        "/delete/{:_id}": {
+        "/delete/{:notesId}": {
             "delete": {
               "tags": [
-                "Users"
+                "Notes"
               ],
               "description": "delete user data by id from system",
               "parameters": [
                 {
-                  "name": ":_id",
+                  "name": ":notesId",
                   "in": "path",
                   "required": true,
                   "type": "string"

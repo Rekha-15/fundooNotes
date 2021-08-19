@@ -6,7 +6,7 @@
 */
 require('dotenv').config();
 const { exist } = require('joi');
-const logger = require('../logger/user');
+logger = require('../logger/user');
 const services = require('../service/user');
 const { authSchema, userLoginDetails, generatingToken } = require('../utility/validation');
 

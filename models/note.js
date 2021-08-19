@@ -3,6 +3,7 @@ mongoose.set('useNewUrlParser', true);
 mongoose.set('useFindAndModify', false);
 mongoose.set('useCreateIndex', true);
 mongoose.set('useUnifiedTopology', true);
+logger = require('../logger/user');
 
 const NotesSchema = new mongoose.Schema({
   title: {
@@ -92,7 +93,7 @@ class NotesModel {
    * @returns data else if error returns error
    */
    deleteNoteById = (notesId) => {
-    return Note.findByIdAnddeleteOne()(notesId)
+    return NoteModel.findByIdAndUpdate(notesId.notesId)
       .then((note) => {
         logger.info("Note deleted successfully", note);
         return note;

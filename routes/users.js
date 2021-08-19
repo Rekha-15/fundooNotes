@@ -28,6 +28,6 @@ module.exports = (app) => {
   app.put('/note/:notesId', verifyingToken, noteController.updateNotesById);
 
   //delete note by Id api - PUT request
-  app.put('/delete/:_id', verifyingToken, noteController.deleteNotesById);
+  app.delete('/delete/:notesId', verifyingToken, noteController.deleteNotesById);
 
 }

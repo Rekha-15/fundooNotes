@@ -1,22 +1,43 @@
 {
-    "notes": {
-        "credential": {
-            "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7ImluZm8iOnsiZW1haWwiOiJyZWtoYXBhdGlsLjE1MDlAZ21haWwuY29tIiwicGFzc3dvcmQiOiJQYXNzd29yZEAxMiJ9fSwiaWF0IjoxNjI5MTc4MjU5LCJleHAiOjE2MjkyNjQ2NTl9.W3AvGvLS1ffitgZoSTceHJKbZ0fWd36PF395OcIVhQE",
-            "wrongToken":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Ind3dy5nYXV0YW05NzE5OTdAZ21haWwuY29tIi"
-        },
-        "createNote": {
-            "title": "Note",
-            "description": "Creating Note"
-        },
-        "createNoteWithImproperData": {
-            "title": "Success..."
-        },
-        "updateData": {
-            "title": "Changed",
-            "description": "changed for testing purpose"
-        },
-        "changeTrashStatus": {
-            "isTrashed": true
-        }
+    "notesCreatePos": {
+        "title": "Test Notes",
+        "description": "testing notes app"
+    },
+
+    "notesCreateNegTitle": {
+        "title": "",
+        "description": "this is my second notes"
+    },
+
+    "notesCreateNegDescription": {
+        "title": "Test Notes",
+        "description": ""
+    },
+
+    "getNotesById": "611e11b9cc019e5c1c9345a5",
+
+    "getNotesByIdNeg": "611e11b9cc019e5c1c9345a5",
+
+    "notesPutPos": {
+        "title": "Test Notes",
+        "description": "testing notes app"
+    },
+
+    "notesPutNegTitle": {
+        "title": "",
+        "description": "this is my second notes"
+    },
+
+    "notesPutNegDescription": {
+        "title": "Test Notes",
+        "description": ""
+    },
+
+    "notesDelPos": {
+        "isDeleted": true
+    },
+
+    "notesDelNeg": {
+        "isDeleted": ""
     }
 }
