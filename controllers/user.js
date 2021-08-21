@@ -70,61 +70,50 @@ class Controller {
    * @param         : httpRequest and httpResponse
    * @method        : services file method for login having an object and callback
   */
-  // login = (req, res) => {
-  //   try {
-  //     const loginCredentials = {
-  //       email: req.body.email,
-  //       password: req.body.password,
-  //     };
-  //     const validationResult = userLoginDetails.validate(loginCredentials);
-  //     if (validationResult.error) {
-  //       logger.error("Error while trying to login the user",error);
-  //       res.status(400).send({
-  //         success: false,
-  //         message: 'Pass the proper format of all the fields',
-  //         data: validationResult,
-  //       });
-  //       return;
-  //     }
-  //     services.login(loginCredentials, (error, data) => {
-  //       if (error) {
-  //         logger.error("Error while trying to login the user",error);
-  //         return res.status(403).send({
-  //           success: false,
-  //           message: 'please check email and password and try again',
-  //           error,
-  //         })
-  //       }
-  //       logger.info("user logged in successfully😊", data);
-  //       res.status(200).send({
-  //         success: true,
-  //         message: 'logged in successfully',
-  //         token: generatingToken(data)   
-  //       });
-  //     });    
-  //   } catch (err) {
-  //     logger.error("Error while trying to login the user",err);
-  //     return res.status(500).send({
-  //       success: false,
-  //       message: 'Internal server error',
-  //     });
-  //   }
-  // }
-
-  login = (req, res) => {
-    const info = {
+   login = (req, res) => {
+    try {
+      const loginCredentials = {
         email: req.body.email,
-        password : req.body.password
+        password: req.body.password,
+      };
+      services.login(loginCredentials, (error, data) => {
+        if (error) {
+          return res.status(400).send({
+            success: false,
+            message: 'login failed',
+            error,
+          });
+        }
+        return res.status(200).send({
+          success: true,
+          message: 'logged in successfully',
+          token: generatingToken(data),
+          data,
+        });
+      });
+    } catch (err) {
+      return res.status(500).send({
+        success: false,
+        message: 'Internal server error',
+      });
     }
-    services.login(info, (error, token) => {
-        if(error){
-            return res.status(400).send({success: false, message: error, token: null})
-        }
-        else{
-            return res.status(200).send({success: true, message: "Successfully Logged In", token: token})
-        }
-    })
-}
+  }
+
+
+  // login = (req, res) => {
+  //   const info = {
+  //       email: req.body.email,
+  //       password : req.body.password
+  //   }
+  //   services.login(info, (error, token) => {
+  //       if(error){
+  //           return res.status(400).send({success: false, message: error, token: error})
+  //       }
+  //       else{
+  //           return res.status(200).send({success: true, message: "Successfully Logged In", token: token})
+  //       }
+  //   })
+  // }
 
     
 

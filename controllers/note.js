@@ -1,5 +1,5 @@
 const notesService = require('../service/note');
-const {notesCreationValidation} = require('../utility/validation');
+const {notesCreationValidation, labelValidation} = require('../utility/validation');
 logger = require('../logger/user');
 
 
@@ -76,44 +76,92 @@ class NotesController {
         }
     }
 
-    /**
+  //   /**
+  //    * @description function written to delete note by ID
+  //    * @param {*} req 
+  //    * @param {*} res 
+  //    */
+  //   // finding note and updating it with the request body
+  //     deleteNotesById = (req, res) => {
+  //       try {
+  //         console.log(req.params)
+  //         notesService.deleteNoteById(req.params)
+  //       .then((note) => {
+  //         if (!note) {
+  //           return res.status(404).send({
+  //             success: false,
+  //             message: "Note not found with id " + req.params,
+  //           });
+  //         }
+  //         res.send({
+  //           success: true,
+  //           message: "Note deleted successfully!",
+  //           data: note,
+  //         });
+  //       })
+  //       .catch((err) => {
+  //         logger.error("Error while deleting the note", err);
+  //         res.status(500).json({
+  //           success: false,
+  //           message: err,
+  //         });
+  //       });
+  //   } catch (error) {
+  //     logger.error("Error while deleting the note", error);
+  //     res.status(500).json({
+  //       success: false,
+  //       message: error,
+  //     });
+  //   }
+  // };
+
+  /**
      * @description function written to delete note by ID
      * @param {*} req 
      * @param {*} res 
+     * @returns response
      */
-    // finding note and updating it with the request body
-      deleteNotesById = (req, res) => {
-        try {
-          console.log(req.params)
-          notesService.deleteNoteById(req.params)
-        .then((note) => {
-          if (!note) {
-            return res.status(404).send({
-              success: false,
-              message: "Note not found with id " + req.params,
-            });
-          }
-          res.send({
-            success: true,
-            message: "Note deleted successfully!",
-            data: note,
-          });
-        })
-        .catch((err) => {
-          logger.error("Error while deleting the note", err);
-          res.status(500).json({
-            success: false,
-            message: err,
-          });
-        });
+   async deleteNotesById(req, res) {
+    try {
+        let notesId = req.params;
+        const notesData = {
+            _id: notesId,
+            isDeleted: req.body.isDeleted
+        }
+        const deleteNote = await notesService.deleteNoteById(notesId);
+        res.send({success: true, message: "Note Deleted!"});
     } catch (error) {
-      logger.error("Error while deleting the note", error);
-      res.status(500).json({
-        success: false,
-        message: error,
-      });
+        console.log(error);
+        res.status(500).send({success: false, message: "Some error occurred while updating notes"});
     }
-  };
+  }
+
+  /**
+     * @description function written to add label to note
+     * @param {*} a valid noteId is expected
+     * @param {*} a valid labelData is expected
+     * @returns 
+     */
+   async addLabelToNote(req, res) {
+    try {
+        let dataValidation = labelValidation.validate(req.body);
+        if (dataValidation.error) {
+            return res.status(400).send({
+                message: dataValidation.error.details[0].message
+            });
+        }
+        const noteId = req.body.noteId;
+        const labelData = {
+            labelId: [req.body.labelId]
+        }
+
+        const addLabelName = await notesService.addLabelToNote(noteId, labelData);
+        res.send({success: true, message: "Label Added!", data: addLabelName});
+    } catch (error) {
+        console.log(error);
+        res.status(500).send({success: false, message: "Some error occurred while adding label to notes"});
+    }
+  }
 }
 
 //exporting th whole class to utilize or call function created in this class

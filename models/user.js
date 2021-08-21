@@ -8,7 +8,6 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 const logger = require('../logger/user');
-const { error } = require('../logger/user');
 const user = require('../controllers/user');
 
 const fundooNoteSchema = mongoose.Schema({
@@ -65,20 +64,39 @@ class Model {
    * @description     : It uses to login the registered user
    * @param           : data, callback
   */
-  login = (data, callback) => {
-    FundooNoteModel.findOne(
-      { email: data.email },
-      (error, user) => {
-        if(error) {
-          logger.error("Error while finding user", error);
-          callback(null, user);
-        } else {
-          logger.info("User found", user);
-          callback(null, user);
-        }
+   login = (data, callback) => {
+    FundooNoteModel.findOne({ email: data.email },
+    (error, user) => {
+    if(error) {
+      logger.error("Error while finding user", error);
+      callback(null, user);
+    } else {
+      logger.info("User found", user);
+      callback(null, user);
       }
+    }
     );
-  };
+  }
+
+
+  // /**
+  //  * @description     : It uses to login the registered user
+  //  * @param           : data, callback
+  // */
+  // login = (data, callback) => {
+  //   FundooNoteModel.findOne(
+  //     { email: data.email },
+  //     (error, user) => {
+  //       if(error) {
+  //         logger.error("Error while finding user", error);
+  //         callback(null, user);
+  //       } else {
+  //         logger.info("User found", user);
+  //         callback(null, user);
+  //       }
+  //     }
+  //   );
+  // };
 
   /**
    * @description     : It uses to if a user forgot his/her password so send a mail
@@ -99,20 +117,24 @@ class Model {
    * @method          : findOneAndUpdate to update password with new one
   */
   
-  resetPassword = async(inputData, callback) =>{
-    try{
-        const data = await FundooNoteModel.findOne({email: inputData.email})
-        const hash = bcrypt.hashSync(inputData.password,10,(error, hashPassword) =>{
-            return error? error: hashPassword
-        })
-        FundooNoteModel.findOneAndUpdate({ email: data.email }, {password: hash},(error, data) => {
-            return error ? callback(error, null) : callback(null, data)
-        })
-    }catch(error){
-        return callback(error, null)
-    }
-    
-}
+  // resetPassword = async(inputData, callback) =>{
+  //   try{
+  //       const data = await FundooNoteModel.findOne({email: inputData.email})
+  //       const hash = bcrypt.hashSync(inputData.password,10,(error, hashPassword) => error || hashPassword);
+        
+  //       FundooNoteModel.findOneAndUpdate({ email: data.email }, {password: hash},(error, data) => (error ? callback(error, null) : callback(null, data)));
+  //   }catch(error){
+  //       return callback(error)
+  //   }
+
+  resetPassword = async (data, callback) => {
+    const salt = await bcrypt.genSalt(10);
+    const encrypt = await bcrypt.hash(data.password, salt);
+    FundooNoteModel.findOneAndUpdate({ email: data.email }, { password: encrypt })
+      .then((credential) => {
+        callback(credential);
+      });
+  }
 }
 
 //exporting the class        

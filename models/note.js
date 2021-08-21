@@ -12,10 +12,10 @@ const NotesSchema = new mongoose.Schema({
   description: {
       type: String
   },
-  isDeleted: {
-      type: Boolean,
-      default: false
-  }
+//   isDeleted: {
+//       type: Boolean,
+//       default: false
+//   }
 }, {
   // generates the time stamp the data is been added
   timestamps: true,
@@ -92,17 +92,27 @@ class NotesModel {
    * @param {*} notesData 
    * @returns data else if error returns error
    */
-   deleteNoteById = (notesId) => {
-    return NoteModel.findByIdAndUpdate(notesId.notesId)
-      .then((note) => {
-        logger.info("Note deleted successfully", note);
-        return note;
-      })
-      .catch((error) => {
-        logger.error("Error while deleting the note by id", error);
-        throw error;
-      });
-  };
+//    deleteNoteById = (notesId) => {
+//     return NoteModel.findByIdAndUpdate(notesId.notesId)
+//       .then((note) => {
+//         logger.info("Note deleted successfully", note);
+//         return note;
+//       })
+//       .catch((error) => {
+//         logger.error("Error while deleting the note by id", error);
+//         throw error;
+//       });
+//   };
+
+ async deleteNote(notesId) {
+    try {
+        return await NoteModel.findByIdAndUpdate(notesId.notesId, {
+            isDeleted: notesData.isDeleted
+        }, {new: true});
+    } catch (error) {
+        return error;
+    }
+  }
 }
 
 //exporting the class to utilize or call function created in this class

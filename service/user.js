@@ -27,42 +27,47 @@ class Service {
     });
   };
 
+  // /**
+  //  * @description     : it acts as a midlleware for models and controllers
+  //  * @param           : data, callback
+  //  * @method          : login from models
+  // */
+  // login = (info, callback) => {
+  //   // const { password } = data;
+  //   models.login(info, (error, result) => {
+  //     if (error) {
+  //       return callback(error,null)
+  //     }
+  //     if(bcryptAuthentication(info.password, result.password )) {
+  //       const token = generatingToken({info})
+  //       return token ? callback(null, token) : callback(error,null)
+  //     }
+  //     return callback("Incoreectt password", error)
+  //   });
+  // }
+
   /**
    * @description     : it acts as a midlleware for models and controllers
    * @param           : data, callback
    * @method          : login from models
   */
-  login = (info, callback) => {
-    // const { password } = data;
-    models.login(info, (error, result) => {
-      if (error) {
-        return callback(error,null)
+   login = (data, callback) => {
+    const { password } = data;
+    models.login(data, (error, result) => {
+      if (result) {
+        bcrypt.compare(password, result.password, (err, resultt) => {
+          if (err) {
+            callback(err, null);
+          }
+          if (resultt) {
+            callback(null, result);
+          } else {
+            callback('Password does not match');
+          }
+        });
+      } else {
+        callback('user not found');
       }
-      if(bcryptAuthentication(info.password, result.password )) {
-        const token = generatingToken({info})
-        return token ? callback(null, token) : callback(error,null)
-      }
-      return callback("Incoreectt password", error)
-
-      // if (result) { 
-      //   bcrypt.compare(password, result.password, (error, result) => {
-      //     if (error) { 
-      //       logger.error("Error while trying to login the user",error);
-      //       callback(error, null);
-      //     }
-      //     if (result) {
-      //       logger.info("logged in successfully",result)
-      //       callback(null, result);
-            
-      //     } else {
-      //       logger.error("Please enter correct password", error);
-      //       callback('Password does not match');
-      //     }
-       // });
-      // } else {
-      //   logger.error("Error while trying to login the user",error);
-      //   callback('user not found');
-      // }
     });
   }
 

@@ -30,9 +30,11 @@
     "jsonwebtoken": "^8.5.1",
     "mocha": "^9.0.3",
     "mongoose": "^5.13.4",
+    "node-hook": "^1.0.0",
     "nodemailer": "^6.6.3",
     "redis": "^3.1.2",
     "redis-server": "^1.2.2",
+    "superagent": "^6.1.0",
     "swagger-jsdoc": "^6.1.0",
     "swagger-ui-express": "^4.1.6",
     "winston": "^3.3.3"

@@ -47,24 +47,32 @@ class NotesService {
      * @returns 
      */
 
-    deleteNoteById = (notesId) => {
-      return new Promise(function (resolve, reject) {
-        try {
-          notesModel.deleteNoteById(notesId)
-            .then((note) => {
-              logger.info("Note deleted successfully!", note);
-              resolve(note);
-            })
-            .catch((error) => {
-              logger.error("Error while deleting note by id", error);
-              reject(error);
-            });
-        } catch (err) {
-          logger.error("Error while deleting note by id", err);
-          reject(err);
-        }
-      });
-    };
+    // deleteNoteById = (notesId) => {
+    //   return new Promise(function (resolve, reject) {
+    //     try {
+    //       notesModel.deleteNoteById(notesId)
+    //         .then((note) => {
+    //           logger.info("Note deleted successfully!", note);
+    //           resolve(note);
+    //         })
+    //         .catch((error) => {
+    //           logger.error("Error while deleting note by id", error);
+    //           reject(error);
+    //         });
+    //     } catch (err) {
+    //       logger.error("Error while deleting note by id", err);
+    //       reject(err);
+    //     }
+    //   });
+    // };
+    
+     async deleteNoteById(notesId, notesData) {
+      try {
+          return await notesModel.deleteNote(notesId, notesData);
+      } catch (error) {
+          return error
+      }
+  }
 }
 
 //exporting the class to utilize or call function created in this class
