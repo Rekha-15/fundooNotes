@@ -14,10 +14,6 @@
         "description": ""
     },
 
-    "getNotesById": "611e11b9cc019e5c1c9345a5",
-
-    "getNotesByIdNeg": "611e11b9cc019e5c1c9345a5",
-
     "notesPutPos": {
         "title": "Test Notes",
         "description": "testing notes app"

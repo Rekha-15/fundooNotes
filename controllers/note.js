@@ -1,5 +1,5 @@
 const notesService = require('../service/note');
-const {notesCreationValidation, labelValidation} = require('../utility/validation');
+const {notesCreationValidation, addingRemovingLabelValidation} = require('../utility/validation');
 logger = require('../logger/user');
 
 
@@ -144,24 +144,51 @@ class NotesController {
      */
    async addLabelToNote(req, res) {
     try {
-        let dataValidation = labelValidation.validate(req.body);
+        let dataValidation = addingRemovingLabelValidation.validate(req.body);
         if (dataValidation.error) {
             return res.status(400).send({
                 message: dataValidation.error.details[0].message
             });
         }
-        const noteId = req.body.noteId;
+        const notesId = req.body.notesId;
         const labelData = {
             labelId: [req.body.labelId]
         }
 
-        const addLabelName = await notesService.addLabelToNote(noteId, labelData);
+        const addLabelName = await notesService.addLabelToNote(notesId, labelData);
         res.send({success: true, message: "Label Added!", data: addLabelName});
     } catch (error) {
         console.log(error);
         res.status(500).send({success: false, message: "Some error occurred while adding label to notes"});
     }
-  }
+}
+
+/**
+ * @description function written to delete label from note
+ * @param {*} a valid noteId is expected
+ * @param {*} a valid labelData is expected
+ * @returns 
+ */
+ async deleteLabelFromNote(req, res) {
+    try {
+        let dataValidation = addingRemovingLabelValidation.validate(req.body);
+        if (dataValidation.error) {
+            return res.status(400).send({
+                message: dataValidation.error.details[0].message
+            });
+        }
+        const notesId = req.body.notesId;
+        const labelData = {
+            labelId: [req.body.labelId]
+        }
+
+        const addLabelName = await notesService.deleteLabelFromNote(notesId, labelData);
+        res.send({success: true, message: "Label Deleted!", data: addLabelName});
+    } catch (error) {
+        console.log(error);
+        res.status(500).send({success: false, message: "Some error occurred while deleting label from notes"});
+    }
+ }
 }
 
 //exporting th whole class to utilize or call function created in this class

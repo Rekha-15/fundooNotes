@@ -52,6 +52,22 @@ const notesCreationValidation = Joi.object({
     .required(),
 });
 
+
+const labelValidation = Joi.object({
+  labelName: Joi.string()
+  .required(),
+});
+
+
+
+const addingRemovingLabelValidation = Joi.object({
+  notesId: Joi.string()
+  .required(),
+
+  labelId: Joi.string()
+  .required(),
+});
+
 /**
  * @description   : creating token using jsonwebtoken module
  * @param {data} as data which comes from the body of postmen
@@ -141,5 +157,7 @@ module.exports = {
   sendingEmail,
   getEmailFromToken,
   notesCreationValidation,
+  labelValidation,
+  addingRemovingLabelValidation,
   bcryptAuthentication
 }

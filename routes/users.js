@@ -6,7 +6,7 @@
 const controller = require('../controllers/user')
 const  { verifyingToken }  = require('../utility/validation')
 const noteController = require('../controllers/note');
-
+const labelController = require('../controllers/label');
 
 
 module.exports = (app) => {
@@ -30,4 +30,25 @@ module.exports = (app) => {
   //delete note by Id api - PUT request
   app.delete('/delete/:notesId', verifyingToken, noteController.deleteNotesById);
 
+  //label creation api - POST request
+  app.post('/createLabel/:userId',  verifyingToken, labelController.createLabel);
+
+  //get all labels api - GET request
+  app.get('/labels/:labels',  verifyingToken, labelController.getAllLabels);
+
+  //get single label by ID api - GET request
+  app.get('/label/:labelId',  verifyingToken, labelController.getLabelById);
+
+  //update single label by ID api - PUT request
+  app.put('/updateLabel/:labelId',  verifyingToken, labelController.updateLabelById);
+
+  //delete label by ID api - DELETE request
+  app.delete('/deleteLabel/:labelId',  verifyingToken, labelController.deleteLabelById);
+
+  //add label to note api - PUT request
+  app.put('/addLabel',  verifyingToken, noteController.addLabelToNote);
+
+  //delete label from note api - PUT request
+  app.delete('/deleteLabel',  verifyingToken, noteController.deleteLabelFromNote);
+  
 }

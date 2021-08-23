@@ -73,6 +73,34 @@ class NotesService {
           return error
       }
   }
+
+  /**
+     * @description function written to add label to note
+     * @param {*} a valid noteId is expected
+     * @param {*} a valid labelData is expected
+     * @returns 
+     */
+   async addLabelToNote(notesId, labelData) {
+    try {
+        return await notesModel.addLabelToNote(notesId, labelData);
+    } catch (error) {
+        return error
+    }
+}
+
+/**
+ * @description function written to delete label from note
+ * @param {*} a valid noteId is expected
+ * @param {*} a valid labelData is expected
+ * @returns 
+ */
+async deleteLabelFromNote(notesId, labelData) {
+    try {
+        return await notesModel.deleteLabelFromNote(notesId, labelData);
+    } catch (error) {
+        return error
+    }
+  }
 }
 
 //exporting the class to utilize or call function created in this class

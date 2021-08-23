@@ -1,8 +1,7 @@
 const mocha = require('mocha')
 const chai = require('chai')
 // chai-http is an addon plugin for  Chai Assertion Library
-const chaiHttp = require('chai-http')
-require('superagent')
+ const chaiHttp = require('chai-http')
 const server = require('../server')
 const userInputs = require('./note.json')
 const userInput = require('./user.json')
@@ -27,20 +26,15 @@ beforeEach((done) => {
             token = res.body.token;
             done();
         });
-    });
+});
 
     /**
      * /POST request test
      * Positive and Negative - Creation of Notes
      */
     describe('POST notes /create', () => {
-        it('givenValidDataItShould_makePOSTRequestAndCreateNotes_andReturnsStatusCodeAs200', (done) => {
+        it('givenCreteNoteDetails_whenProper_shouldSaveInDB', (done) => {
             let UserNotes  = userInputs.notesCreatePos
-            // let notesData ={ 
-                
-            //     "title": "string, hi",
-            //     "description": "string changed"
-            // }
             chai.request(server)
                 .post('/createNotes')
                 .send(UserNotes)
@@ -49,16 +43,14 @@ beforeEach((done) => {
                     if (error) {
                         return done(error);
                     }
-                     res.should.have.status(200);
-                    res.body.should.be.a('object');
+                    res.should.have.status(200);
                     res.body.should.have.property("success").eql(true);
                     res.body.should.have.property("message").eql("Notes Created!");
-                    res.body.should.have.property("data").should.be.a('object');
                     return done();
                 });
         });
 
-        it('givenInvalidTitle_andValidDescription_failsToMakePOSTRequestToCreateNote_andReturnsStatusCodeAs400', (done) => {
+        it('givenCreteNoteDetails_whenInvalidTitle_shouldFailsToMakePOSTRequestToCreateNote', (done) => {
             let UserNotes  = userInputs.notesCreateNegTitle
             chai.request(server)
                 .post('/createNotes')
@@ -75,7 +67,7 @@ beforeEach((done) => {
                 });
         });
 
-        it('givenInvalidDescription_andValidTitle_failsToMakePOSTRequestToCreateNotes_andReturnsStatusCodeAs400', (done) => {
+        it('givenCreteNoteDetails_whenInvalidDescription_shouldFailsToMakePOSTRequestToCreateNote', (done) => {
             let UserNotes = userInputs.notesCreateNegDescription
             chai.request(server)
                 .post('/createNotes')
@@ -91,6 +83,20 @@ beforeEach((done) => {
                     return done();
                 });
         });
+
+        it('givenDetails_WhenNotPassingToken_shouldNotCreateNotes', (done) => {
+            chai.request(server)
+                .get('/notes/notes')
+                .end((error, res) => {
+                    if (error) {
+                        return done(error);
+                    }
+                    res.should.have.status(401);
+                    res.body.should.be.a('object');
+                    res.body.should.have.property("message").eql("Authorisation failed! Invalid user");
+                    return done();
+                });
+        });
     });
 
 
@@ -99,7 +105,7 @@ beforeEach((done) => {
      * Positive and Negative - Get all Notes from database
      */
     describe('GET all /notes', () => {
-        it('givenValidRequest_successfullyMakesGETRequestToGetAllNotes_andReturnsStatusCodeAs200', (done) => {
+        it('givenValidDetails__whenProper_shouldGETRequestToGetAllNotes', (done) => {
             chai.request(server)
                 .get('/notes/notes')
                 .set('token', token)
@@ -111,7 +117,20 @@ beforeEach((done) => {
                     res.body.should.be.a('object');
                     res.body.should.have.property("success").eql(true);
                     res.body.should.have.property("message").eql("Notes Retrieved!");
-                    res.body.should.have.property("data").should.be.a('object');
+                    return done();
+                });
+        });
+
+        it('givenDetails_WhenNotPassingToken_shouldNotGetAllNotes', (done) => {
+            chai.request(server)
+                .get('/notes/notes')
+                .end((error, res) => {
+                    if (error) {
+                        return done(error);
+                    }
+                    res.should.have.status(401);
+                    res.body.should.be.a('object');
+                    res.body.should.have.property("message").eql("Authorisation failed! Invalid user");
                     return done();
                 });
         });
@@ -122,7 +141,7 @@ beforeEach((done) => {
       * Positive and Negative - Updating a single contact using ID into database 
       */
     describe('PUT /note/:notesId', () => {
-        it('givenValidDataItShould_updateOrPUTNotesSuccessfullyUsingID_andReturnsStatusCodeAs200', (done) => {
+        it('givenUreteNoteDetails_whenProper_shouldMakePUTRequestToCreateNote', (done) => {
             chai.request(server)
                 .put('/note/611e11b9cc019e5c1c9345a5')
                 .send(userInputs.notesPutPos)
@@ -135,12 +154,11 @@ beforeEach((done) => {
                     res.body.should.be.a('object');
                     res.body.should.have.property("success").eql(true);
                     res.body.should.have.property("message").eql("Notes Updated!");
-                    res.body.should.have.property("data").should.be.a('object');
                     return done();
                 });
         });
 
-        it('givenInvalidTitle_andValidDescription_failsToMakePUTRequestToUpdateNote_andReturnsStatusCodeAs400', (done) => {
+        it('givenUpdateNoteDetails_whenInvalidTitle_shouldFailsToMakePutRequestToCreateNote', (done) => {
             chai.request(server)
                 .put('/note/611e11b9cc019e5c1c9345a5')
                 .send(userInputs.notesPutNegTitle)
@@ -156,7 +174,7 @@ beforeEach((done) => {
                 });
         });
 
-        it('givenInvalidDescription_andValidTitle_failsToMakePUTRequestToUpdateNote_andReturnsStatusCodeAs400', (done) => {
+        it('givenUpdateNoteDetails_whenInvalidDescription_shouldFailsToMakePUtRequestToCreateNote', (done) => {
             chai.request(server)
                 .put('/note/611e11b9cc019e5c1c9345a5')
                 .send(userInputs.notesPutNegDescription)
@@ -171,6 +189,20 @@ beforeEach((done) => {
                     return done();
                 });
         });
+
+        it('givenDetails_WhenNotPassingToken_shouldNotUpdateNotes', (done) => {
+            chai.request(server)
+                .get('/notes/notes')
+                .end((error, res) => {
+                    if (error) {
+                        return done(error);
+                    }
+                    res.should.have.status(401);
+                    res.body.should.be.a('object');
+                    res.body.should.have.property("message").eql("Authorisation failed! Invalid user");
+                    return done();
+                });
+        });
     });
 
     /**
@@ -178,9 +210,9 @@ beforeEach((done) => {
      * Positive and Negative - Deleting a single contact using ID into database 
      */
     describe('delete/:notesId', () => {
-        it('givenValidDataItShould_delete_andReturnsStatusCodeAs200', (done) => {
+        it('givenValidDatat_whenProper_shouldDeleteInDB', (done) => {
             chai.request(server)
-                .delete('/delete/6119eeb5e390f34140e68305')
+                .delete('/delete/6122b36581b3cb26188e9f08')
                 .send(userInputs.notesDelPos)
                 .set('token', token)
                 .end((error, res) => {
@@ -195,7 +227,7 @@ beforeEach((done) => {
                 });
         });
 
-        it('givenInValidDataItShould_deleteOrPUTNotesSuccessfullyUsingID_andReturnsStatusCodeAs400', (done) => {
+        it('givenDatat_whenImProper_shouldNotDeleteInDB', (done) => {
             chai.request(server)
                 .delete('/delete')
                 .send(userInputs.notesDelNeg)
@@ -206,10 +238,23 @@ beforeEach((done) => {
                     }
                     res.should.have.status(404);
                     res.body.should.be.a('object');
-                   // res.body.should.have.property("message").eql("\"isDeleted\" must be a boolean");
                     return done();
                 });
         });
-      });
-//})
+
+        it('givenDetails_WhenNotPassingToken_shouldNotDeleteNotes', (done) => {
+            chai.request(server)
+                .get('/notes/notes')
+                .end((error, res) => {
+                    if (error) {
+                        return done(error);
+                    }
+                    res.should.have.status(401);
+                    res.body.should.be.a('object');
+                    res.body.should.have.property("message").eql("Authorisation failed! Invalid user");
+                    return done();
+                });
+        });
+    });
+
   

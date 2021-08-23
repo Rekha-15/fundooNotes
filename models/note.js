@@ -12,14 +12,16 @@ const NotesSchema = new mongoose.Schema({
   description: {
       type: String
   },
-//   isDeleted: {
-//       type: Boolean,
-//       default: false
-//   }
+  isDeleted: {
+      type: Boolean,
+      default: false
+  },
+  labels : {
+    type: [String]
+  }
 }, {
   // generates the time stamp the data is been added
   timestamps: true,
-  versionKey: false
 })
 
 const NoteModel = mongoose.model('Notes', NotesSchema);
@@ -109,6 +111,38 @@ class NotesModel {
         return await NoteModel.findByIdAndUpdate(notesId.notesId, {
             isDeleted: notesData.isDeleted
         }, {new: true});
+    } catch (error) {
+        return error;
+    }
+  }
+
+  /**
+     * @description function written to add label to note
+     * @param {*} a valid noteId is expected
+     * @param {*} a valid labelData is expected
+     * @returns 
+     */
+   async addLabelToNote(notesId, labelData) {
+    try {
+        return await NoteModel.findByIdAndUpdate(notesId,
+            {$push : { "labels": {$each: labelData.labelId}} },
+            {new: true});
+    } catch (error) {
+        return error;
+    }
+}
+
+/**
+ * @description function written to remove label from note
+ * @param {*} a valid noteId is expected
+ * @param {*} a valid labelData is expected
+ * @returns 
+ */
+async deleteLabelFromNote(notesId, labelData) {
+    try {
+        return await NoteModel.findByIdAndUpdate(notesId,
+            {$pull : { "labels": (labelData.labelId[(0)])} },
+            {new: true});
     } catch (error) {
         return error;
     }
