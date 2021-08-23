@@ -1,0 +1,25 @@
+{
+    "labelCreatePos": {
+        "labelName": "New Test Label"
+    },
+
+    "labelCreateNegWithNoNotesId": {
+        "labelName": "New Test Label For Neg"
+    },
+
+    "labelCreateNeg": {
+        "labelName": ""
+    },
+
+    "lablePutPos": {
+        "labelName": "New Test Label To Update"
+    },
+
+    "lablePutEmptyNeg": {
+        "labelName": ""
+    },
+
+    "labelsDelNeg": {
+        "labelName": "New Test Label For Neg Update"
+    }
+}
