@@ -7,6 +7,7 @@ const controller = require('../controllers/user')
 const  { verifyingToken }  = require('../utility/validation')
 const noteController = require('../controllers/note');
 const labelController = require('../controllers/label');
+const redisCache = require('../utility/redis');
 
 
 module.exports = (app) => {
@@ -22,7 +23,7 @@ module.exports = (app) => {
   app.post('/createNotes', verifyingToken, noteController.createNotes);
 
   //get all notes api - GET request
-  app.get('/notes/:notes', verifyingToken, noteController.getAllNotes);
+  app.get('/notes/:notes', verifyingToken,redisCache.checkCache, noteController.getAllNotes);
 
   //update note by Id api - PUT request
   app.put('/note/:notesId', verifyingToken, noteController.updateNotesById);
@@ -34,7 +35,7 @@ module.exports = (app) => {
   app.post('/createLabel/:userId',  verifyingToken, labelController.createLabel);
 
   //get all labels api - GET request
-  app.get('/labels/:labels',  verifyingToken, labelController.getAllLabels);
+  app.get('/labels/:labels', verifyingToken, redisCache.checkLabelCache, labelController.getAllLabels);
 
   //get single label by ID api - GET request
   app.get('/label/:labelId',  verifyingToken, labelController.getLabelById);

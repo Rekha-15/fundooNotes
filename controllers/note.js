@@ -1,6 +1,9 @@
 const notesService = require('../service/note');
 const {notesCreationValidation, addingRemovingLabelValidation} = require('../utility/validation');
 logger = require('../logger/user');
+const redisClass = require('../utility/redis')
+const redis = require('redis');
+const client = redis.createClient(process.env.REDIS_PORT);
 
 
 class NotesController {
@@ -41,6 +44,7 @@ class NotesController {
             const getNotes = req.params;
             const getAllNotes = await notesService.getAllNotes();
             const data = await JSON.stringify(getAllNotes);
+            redisClass.setDataInCache(getNotes.notes, 3600, data)
             res.send({success: true, message: "Notes Retrieved!", data: getAllNotes});
         } catch (error) {
             console.log(error);

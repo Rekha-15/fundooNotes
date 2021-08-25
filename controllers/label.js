@@ -11,8 +11,9 @@
  *********************************************************************/
 
  const logger = require('../logger/user');
-const labelService = require('../service/label');
+ const labelService = require('../service/label');
  const {labelValidation} = require('../utility/validation');
+ const redisClass = require('../utility/redis')
 
  
  class LabelController {
@@ -23,22 +24,22 @@ const labelService = require('../service/label');
       */
      async createLabel(req, res) {
          try {
-             let dataValidation = labelValidation.validate(req.body);
-             if (dataValidation.error) {
-                 return res.status(400).send({
-                     message: dataValidation.error.details[0].message
-                 });
-             }
-             const labelData = {
-                 labelName: req.body.labelName,
-                 notesId: req.params.notesId
-             }
-             const labelCreated = await labelService.createLabel(labelData);
-             res.send({success: true, message: "Label Created!", data: labelCreated});
+            let dataValidation = labelValidation.validate(req.body);
+            if (dataValidation.error) {
+                return res.status(400).send({
+                    message: dataValidation.error.details[0].message
+                });
+            }
+            const labelData = {
+                labelName: req.body.labelName,
+                notesId: req.params.notesId
+            }
+            const labelCreated = await labelService.createLabel(labelData);
+            res.send({success: true, message: "Label Created!", data: labelCreated});
          } catch (error) {
-             logger.info('Some error occured while creating label', error)
-             console.log(error);
-             res.status(500).send({success: false, message: "Some error occurred while creating label"});
+            logger.info('Some error occured while creating label', error)
+            console.log(error)
+            res.status(500).send({success: false, message: "Some error occurred while creating label"});
          }
      }
  
@@ -52,6 +53,7 @@ const labelService = require('../service/label');
              const getLabels = req.params;
              const getAllLabels = await labelService.getAllLabels();
              const data = await JSON.stringify(getAllLabels);
+             redisClass.setDataInCache(getLabels.labels, 3600, data)
              res.send({success: true, message: "Labels Retrieved!", data: getAllLabels});
          } catch (error) {
              console.log(error);
@@ -91,7 +93,7 @@ const labelService = require('../service/label');
  
              let labelId = req.params;
              const labelData = {
-                 labelName: req.body.labelName
+                labelName: req.body.labelName
              }
              const updatedLabel = await labelService.updateLabelById(labelId, labelData);
              res.send({success: true, message: "Label Name Updated!", data: updatedLabel});

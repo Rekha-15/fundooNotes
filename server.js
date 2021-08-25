@@ -14,6 +14,7 @@ const bodyParser = require('body-parser')
 const swaggerUI = require('swagger-ui-express')
 const swaggerDoc = require('./swagger/swagger.json')
 const logger = require('./logger/user')
+const redis = require('redis');
 
 // create express app
 const app = express()
