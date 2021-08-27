@@ -212,12 +212,12 @@
                 }]
             }
         },
-        "/note/{noteId}": {
+        "/note/{notesId}": {
             "get": {
                 "tags": ["Notes"],
-                "description": "get note by ID",
+                "description": "get notes by ID",
                 "parameters": [{
-                    "name": "NoteId",
+                    "name": "notesId",
                     "in": "path",
                     "required": true,
                     "type": "string"

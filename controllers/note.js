@@ -40,11 +40,11 @@ class NotesController {
       */
      async getNoteById(req, res) {
         try {
-            let labelId = req.params;
-            const getLabel = await labelService.getLabelById(notesId);
-            const data = JSON.stringify(getLabel);
-            redisClass.setDataInCache("labelId", 3600, data)
-            res.send({success: true, message: "Label Retrieved!", data: getLabel});
+            let notesId = req.params;
+            const getNote = await notesService.getNoteById(notesId);
+            const data = JSON.stringify(getNote);
+            redisClass.setDataInCache("notesId", 3600, data)
+            res.send({success: true, message: "Label Retrieved!", data: getNote});
         } catch (error) {
             console.log(error);
             res.status(500).send({success: false, message: "Some error occurred while retrieving label"});

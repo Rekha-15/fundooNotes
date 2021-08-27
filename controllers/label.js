@@ -71,7 +71,7 @@
              let labelId = req.params;
              const getLabel = await labelService.getLabelById(labelId);
              const data = JSON.stringify(getLabel);
-             redisClass.setDataInCache("labelId", 3600, data)
+             redisClass.setDataInCache("labelId", 3200, data)
              res.send({success: true, message: "Label Retrieved!", data: getLabel});
          } catch (error) {
              console.log(error);

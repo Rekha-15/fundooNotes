@@ -22,11 +22,13 @@ module.exports = (app) => {
   //notes creation api - POST request
   app.post('/createNotes', verifyingToken, noteController.createNotes);
 
+  app.get('/note/:notesId', verifyingToken, redisCache.checkCacheId, noteController.getNoteById);
+
   //get all notes api - GET request
   app.get('/AllNotes', verifyingToken, redisCache.checkCache, noteController.getAllNotes);
 
   //update note by Id api - PUT request
-  app.put('/note/:notesId', verifyingToken, noteController.updateNotesById);
+  app.put('/updateNote/:notesId', verifyingToken, noteController.updateNotesById);
 
   //delete note by Id api - PUT request
   app.delete('/delete/:notesId', verifyingToken, noteController.deleteNotesById);

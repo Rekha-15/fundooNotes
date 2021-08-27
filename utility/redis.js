@@ -13,6 +13,7 @@
  *********************************************************************/
 
  const redis = require('redis');
+const logger = require('../logger/user');
  const client = redis.createClient(process.env.REDIS_PORT);
  
  class RedisClass {
@@ -25,7 +26,9 @@
      checkCache(req, res, next) {
          const  getNotes  = req.params;
          client.get("notes", (error, data) => {
-             if(error) console.log(error);
+             if(error) {
+                 logger.error("Some error occured while retriving data", error)
+             }
              if(data !== null) {
                  data = JSON.parse(data);
                  //console.log(data)
@@ -35,6 +38,27 @@
              }
          });
      }
+
+     /**
+      * 
+      * @param {*} req 
+      * @param {*} res 
+      * @param {*} next 
+      */
+
+      checkCacheId(req, res, next) {
+        //const  getNotes  = req.params;
+        client.get("notes", (error, data) => {
+            if(error) console.log(error);
+            if(data !== null) {
+                data = JSON.parse(data);
+                console.log(data)
+                res.send({success: true, message: "Notes Retrieved!", data: data});
+            }else {
+                next();
+            }
+        });
+    }
  
      /**
       * @description function written to provide data to user in minimal time using caching
