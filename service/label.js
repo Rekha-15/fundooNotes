@@ -4,12 +4,12 @@
  *
  * Purpose      : Invokes the functions related to the database
  *
- * @description
+ * @description : t is use to taking the request from the client and gives the response.
  *
  * @file        : service/label.js
  * @overview    : calls functions from the model to respond to the controller
  * @module      : this is necessary to perform CRUD operations
- * @author      : 
+ * @author      : Rekha R Patil [rekhapatil.1509@gmail.com]
  *********************************************************************/
 
  const labelsModel = require('../models/label');
@@ -48,9 +48,9 @@
      async getLabelById(labelId) {
          try {
              return await labelsModel.getLabelById(labelId);
-         } catch (error) {
+          } catch (error) {
              return error;
-         }
+        }
      }
  
      /**

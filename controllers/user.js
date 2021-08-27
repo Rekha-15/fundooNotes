@@ -10,8 +10,6 @@ logger = require('../logger/user');
 const services = require('../service/user');
 const { authSchema, userLoginDetails, generatingToken } = require('../utility/validation');
 
-
-
 /**
  * @description    : This class has two methods to create and login of user
  * @methods        : create, login and forgotPassword

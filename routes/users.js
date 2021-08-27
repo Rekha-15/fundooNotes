@@ -1,8 +1,8 @@
-/**
+/*****************************************************************************
  * @description   : It is use to route the APIs
  * @file          : user.js
- * @author        : Rekha Patil
-*/
+ * @author        : Rekha R Patil [rekhapatil.1509@gmail.com]
+*****************************************************************************/
 const controller = require('../controllers/user')
 const  { verifyingToken }  = require('../utility/validation')
 const noteController = require('../controllers/note');
@@ -23,7 +23,7 @@ module.exports = (app) => {
   app.post('/createNotes', verifyingToken, noteController.createNotes);
 
   //get all notes api - GET request
-  app.get('/notes/:notes', verifyingToken,redisCache.checkCache, noteController.getAllNotes);
+  app.get('/AllNotes', verifyingToken, redisCache.checkCache, noteController.getAllNotes);
 
   //update note by Id api - PUT request
   app.put('/note/:notesId', verifyingToken, noteController.updateNotesById);
@@ -35,10 +35,10 @@ module.exports = (app) => {
   app.post('/createLabel/:userId',  verifyingToken, labelController.createLabel);
 
   //get all labels api - GET request
-  app.get('/labels/:labels', verifyingToken, redisCache.checkLabelCache, labelController.getAllLabels);
+  app.get('/AllLabels', verifyingToken, labelController.getAllLabels);
 
   //get single label by ID api - GET request
-  app.get('/label/:labelId',  verifyingToken, labelController.getLabelById);
+  app.get('/label/:labelId',  verifyingToken, redisCache.checkLabelCache, labelController.getLabelById);
 
   //update single label by ID api - PUT request
   app.put('/updateLabel/:labelId',  verifyingToken, labelController.updateLabelById);

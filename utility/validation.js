@@ -1,3 +1,10 @@
+/**************************************************************************************************************
+ * @description   : It is use to validate the inputs we are getting from client side using joi and
+ *                  also using Regular expression to follow the pattern properly.
+ * @package       : joi
+ * @file          : validation.js
+ * @author        : Rekha R Patil [rekhapatil.1509@gmail.com]
+*****************************************************************************************************************/
 /* eslint-disable no-unused-vars */
 /* eslint-disable prefer-regex-literals */
 const Joi = require('joi')

@@ -34,6 +34,24 @@ class NotesController {
     }
 
     /**
+      * @description function written to get label by ID
+      * @param {*} req 
+      * @param {*} res 
+      */
+     async getNoteById(req, res) {
+        try {
+            let labelId = req.params;
+            const getLabel = await labelService.getLabelById(notesId);
+            const data = JSON.stringify(getLabel);
+            redisClass.setDataInCache("labelId", 3600, data)
+            res.send({success: true, message: "Label Retrieved!", data: getLabel});
+        } catch (error) {
+            console.log(error);
+            res.status(500).send({success: false, message: "Some error occurred while retrieving label"});
+        }
+    }
+
+    /**
      * @description function written to get all the notes from the database
      * @param {*} req 
      * @param {*} res 
@@ -43,8 +61,8 @@ class NotesController {
         try {
             const getNotes = req.params;
             const getAllNotes = await notesService.getAllNotes();
-            const data = await JSON.stringify(getAllNotes);
-            redisClass.setDataInCache(getNotes.notes, 3600, data)
+            const data = JSON.stringify(getAllNotes);
+            redisClass.setDataInCache("notes", 3600, data)
             res.send({success: true, message: "Notes Retrieved!", data: getAllNotes});
         } catch (error) {
             console.log(error);

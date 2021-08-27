@@ -1,8 +1,8 @@
-/**
+/************************************************************************************
  * @description   : It is work as a middleware between models and controller
  * @file          : user.js
  * @author        : Rekha Patil <rekhapatil.1509@gmail.com>
-*/
+*************************************************************************************/
 const bcrypt = require('bcrypt');
 const logger = require('../logger/user');
 const models = require('../models/user');
