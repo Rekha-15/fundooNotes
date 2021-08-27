@@ -154,9 +154,9 @@ beforeEach((done) => {
       * Positive and Negative - Updating a single contact using ID into database 
       */
     describe('PUT /note/:notesId', () => {
-        it('givenUreteNoteDetails_whenProper_shouldMakePUTRequestToCreateNote', (done) => {
+        it('givenCreteNoteDetails_whenProper_shouldMakePUTRequestToCreateNote', (done) => {
             chai.request(server)
-                .put('/note/611e11b9cc019e5c1c9345a5')
+                .put('/updateNote/611e11b9cc019e5c1c9345a5')
                 .send(userInputs.notesPutPos)
                 .set('token', token)
                 .end((error, res) => {
@@ -173,7 +173,7 @@ beforeEach((done) => {
 
         it('givenUpdateNoteDetails_whenInvalidTitle_shouldFailsToMakePutRequestToCreateNote', (done) => {
             chai.request(server)
-                .put('/note/611e11b9cc019e5c1c9345a5')
+                .put('/updateNote/611e11b9cc019e5c1c9345a5')
                 .send(userInputs.notesPutNegTitle)
                 .set('token', token)
                 .end((error, res) => {
@@ -189,7 +189,7 @@ beforeEach((done) => {
 
         it('givenUpdateNoteDetails_whenInvalidDescription_shouldFailsToMakePUtRequestToCreateNote', (done) => {
             chai.request(server)
-                .put('/note/611e11b9cc019e5c1c9345a5')
+                .put('/updateNote/611e11b9cc019e5c1c9345a5')
                 .send(userInputs.notesPutNegDescription)
                 .set('token', token)
                 .end((error, res) => {

@@ -47,12 +47,14 @@ const logger = require('../logger/user');
       */
 
       checkCacheId(req, res, next) {
-        //const  getNotes  = req.params;
-        client.get("notes", (error, data) => {
-            if(error) console.log(error);
+        //const notesId = req.params.notesId;
+        client.get("notesId", (error, data) => {
+            if(error) {
+                logger.error("Some error occured while retriving data", error)
+            }
             if(data !== null) {
                 data = JSON.parse(data);
-                console.log(data)
+               // console.log(data)
                 res.send({success: true, message: "Notes Retrieved!", data: data});
             }else {
                 next();
@@ -67,7 +69,7 @@ const logger = require('../logger/user');
       * @param {*} if there is no data function calls for next function
       */
       checkLabelCache(req, res, next) {
-        // const  getLabels  = req.params;
+          
          client.get("labelId", (error, data) => {
              if(error) console.log('I am error', error);
              if(data !== null) {
@@ -87,6 +89,20 @@ const logger = require('../logger/user');
      setDataInCache(key, time, value) {
          client.SETEX(key, time, value);
     }
- }
+
+    cacheAvailabilityCheck(key) {
+
+        const ans = client.exists(key);
+        console.log(ans);
+    }
+
+    /**
+     * @description clearing cache
+     */
+    clearCache() {
+        client.flushall();
+        console.log('Cache is cleared!')
+    }
+}
  
  module.exports = new RedisClass();

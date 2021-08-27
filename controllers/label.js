@@ -35,6 +35,7 @@
                 notesId: req.params.notesId
             }
             const labelCreated = await labelService.createLabel(labelData);
+            redisClass.clearCache();
             res.send({success: true, message: "Label Created!", data: labelCreated});
          } catch (error) {
             logger.info('Some error occured while creating label', error)
@@ -50,10 +51,11 @@
       */
      async getAllLabels(req, res) {
          try {
-            // const getLabels = req.params;
+             const getLabels = req.params;
              const getAllLabels = await labelService.getAllLabels();
-            //  const data = JSON.stringify(getAllLabels);
-            //  redisClass.setDataInCache("labels", 3600, data)
+              const data = JSON.stringify(getAllLabels);
+             redisClass.setDataInCache("labels", 3600, data)
+             redisClass.clearCache();
              res.send({success: true, message: "Labels Retrieved!", data: getAllLabels});
          } catch (error) {
              console.log(error);
@@ -74,9 +76,9 @@
              redisClass.setDataInCache("labelId", 3200, data)
              res.send({success: true, message: "Label Retrieved!", data: getLabel});
          } catch (error) {
-             console.log(error);
-             res.status(500).send({success: false, message: "Some error occurred while retrieving label"});
-         }
+            console.log(error);
+            res.status(500).send({success: false, message: "Some error occurred while retrieving label"});
+        }
     }
  
      /**
@@ -98,11 +100,12 @@
                 labelName: req.body.labelName
              }
              const updatedLabel = await labelService.updateLabelById(labelId, labelData);
+             redisClass.clearCache();
              res.send({success: true, message: "Label Name Updated!", data: updatedLabel});
          } catch (error) {
              console.log(error);
              res.status(500).send({success: false, message: "Some error occurred while updating label name"});
-         }
+        }
      }
  
      /**
@@ -114,6 +117,7 @@
          try {
              let labelId = req.params;
              await labelService.deleteLabelById(labelId);
+             redisClass.clearCache();
              res.send({success: true, message: "Label Deleted!"});
          } catch (error) {
              console.log(error);

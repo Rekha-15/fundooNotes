@@ -3,6 +3,7 @@ const {notesCreationValidation, addingRemovingLabelValidation} = require('../uti
 logger = require('../logger/user');
 const redisClass = require('../utility/redis')
 const redis = require('redis');
+const { clear } = require('../logger/user');
 const client = redis.createClient(process.env.REDIS_PORT);
 
 
@@ -25,6 +26,7 @@ class NotesController {
                 title: req.body.title,
                 description: req.body.description
             }
+            redisClass.clearCache();
             const notesCreated = await notesService.createNotes(notesData);
             res.send({success: true, message: "Notes Created!", data: notesCreated});
         } catch (error) {
@@ -44,7 +46,7 @@ class NotesController {
             const getNote = await notesService.getNoteById(notesId);
             const data = JSON.stringify(getNote);
             redisClass.setDataInCache("notesId", 3600, data)
-            res.send({success: true, message: "Label Retrieved!", data: getNote});
+            res.send({success: true, message: "Notes Retrieved!", data: getNote});
         } catch (error) {
             console.log(error);
             res.status(500).send({success: false, message: "Some error occurred while retrieving label"});
@@ -84,13 +86,13 @@ class NotesController {
                     message: dataValidation.error.details[0].message
                 });
             }
-
-            let notesId = req.params;
+           let notesId = req.params;
             const notesData = {
                 title: req.body.title,
                 description: req.body.description
             }
             const updateNote = await notesService.updateNotesById(notesId, notesData);
+            redisClass.clearCache();
             res.send({success: true, message: "Notes Updated!", data: updateNote});
         } catch (error) {
             console.log(error);
@@ -151,6 +153,7 @@ class NotesController {
             isDeleted: req.body.isDeleted
         }
         const deleteNote = await notesService.deleteNoteById(notesId);
+        redisClass.clearCache();
         res.send({success: true, message: "Note Deleted!"});
     } catch (error) {
         console.log(error);
