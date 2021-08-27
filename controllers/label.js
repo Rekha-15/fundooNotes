@@ -55,7 +55,6 @@
              const getAllLabels = await labelService.getAllLabels();
               const data = JSON.stringify(getAllLabels);
              redisClass.setDataInCache("labels", 3600, data)
-             redisClass.clearCache();
              res.send({success: true, message: "Labels Retrieved!", data: getAllLabels});
          } catch (error) {
              console.log(error);
