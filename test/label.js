@@ -246,7 +246,7 @@ beforeEach((done) => {
                     if (error) {
                         return done(error);
                     }
-                    res.should.have.status(404);
+                    res.should.have.status(400);
                     return done();
                 });
         });

@@ -35,5 +35,36 @@
 
     "notesDelNeg": {
         "isDeleted": ""
-    }
+    },
+
+    "addLabelToNotePos": {
+        "notesId": "6120ebd4651305601cfe7cad",
+        "labelId": "6139fe4d5c63b54698a8e9f1"
+      },
+
+      "addLabelToNoteNegNoteId": {
+        "notesId": "",
+        "labelId": "6139fe4d5c63b54698a8e9f1"
+      },
+
+      "addLabelToNoteNegLabelId": {
+        "notesId": "6120ebd4651305601cfe7cad",
+        "labelId": ""
+      },
+
+      "deleteLabelFromNotePos": {
+            "notesId": "6120f11183841d46c427aa3c",
+            "labelId": "613a4fee939f1751b018462c"
+          
+      },
+
+      "deleteLabelToNoteNegNoteId": {
+        "notesId": "305601cfe7cad",
+        "labelId": "6139fe4d5c63b54698a8e9f1"
+      },
+
+      "deleteLabelToNoteNegLabelId": {
+        "notesId": "6120ebd4651305601cfe7cad",
+        "labelId": "698a8e9f1"
+      }
 }

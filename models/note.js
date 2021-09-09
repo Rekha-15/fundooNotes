@@ -6,6 +6,7 @@ mongoose.set('useUnifiedTopology', true);
 logger = require('../logger/user');
 
 const NotesSchema = new mongoose.Schema({
+userId: { type: mongoose.Schema.Types.ObjectId, ref: 'users' },
   title: {
       type: String
   },
@@ -18,7 +19,8 @@ const NotesSchema = new mongoose.Schema({
   },
   labels : {
     type: [String]
-  }
+  },
+  userId: { type: mongoose.Schema.Types.ObjectId, ref: 'users' }
 }, {
   // generates the time stamp the data is been added
   timestamps: true,
@@ -37,6 +39,7 @@ class NotesModel {
   async createInfo(notesData) {
       try {
           const notes = new NoteModel({
+            userId:notesData.userId,
               title: notesData.title,
               description: notesData.description
           });
@@ -140,8 +143,8 @@ class NotesModel {
  */
 async deleteLabelFromNote(notesId, labelData) {
     try {
-        return await NoteModel.findByIdAndUpdate(notesId,
-            {$pull : { "labels": (labelData.labelId[(0)])} },
+        return await NoteModel.findByIdAndDelete(notesId,
+            {$pull : { "labels": (labelData.labelId)} },
             {new: true});
     } catch (error) {
         return error;

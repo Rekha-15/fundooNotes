@@ -1,5 +1,5 @@
 const notesService = require('../service/note');
-const {notesCreationValidation, addingRemovingLabelValidation} = require('../utility/validation');
+const {notesCreationValidation, addingRemovingLabelValidation, verifyToken} = require('../utility/validation');
 logger = require('../logger/user');
 const redisClass = require('../utility/redis')
 const redis = require('redis');
@@ -22,18 +22,23 @@ class NotesController {
                     message: dataValidation.error.details[0].message
                 });
             }
-            const notesData = {
+            let token = req.get('token')
+            //console.log(token)
+                const tokenData = verifyToken(token);
+                const notesData = {
                 title: req.body.title,
                 description: req.body.description,
-                userId: req.userId
-            }
+                userId:tokenData.data._id
+            };
             redisClass.clearCache();
             const notesCreated = await notesService.createNotes(notesData);
             res.send({success: true, message: "Notes Created!", data: notesCreated});
-        } catch (error) {
+        }
+           catch (error) {
             console.log(error);
             res.status(500).send({success: false, message: "Some error occurred while creating notes" });
         }
+      
     }
 
     /**
@@ -176,9 +181,15 @@ class NotesController {
                 message: dataValidation.error.details[0].message
             });
         }
+        let token = req.get('token')
+       //console.log(token)
+        const tokenData = verifyToken(token);
         const notesId = req.body.notesId;
         const labelData = {
             labelId: [req.body.labelId]
+        }
+        const userId = {
+        userId: [tokenData.data._id]
         }
 
         const addLabelName = await notesService.addLabelToNote(notesId, labelData);

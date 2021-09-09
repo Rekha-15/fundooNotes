@@ -90,6 +90,8 @@ bcryptAuthentication = (loginPassword, databasePassword) => {
   return (loginPassword && databasePassword) ? result : false;
 }
 
+
+
 /**
 * @description function checks and validates the user token and authorises only if token is correct
 * @param {*} req
@@ -118,7 +120,7 @@ const verifyingToken = (req, res, next) => {
 }
 
 verifyToken = (token)=>{
-  const data = jwt.verify(token,process.env.ACCESS_TOKEN_KEY);
+  const data = jwt.verify(token,process.env.SECRET);
   if(data){
       return data;
   }

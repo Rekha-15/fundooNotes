@@ -12,8 +12,9 @@
 
  const logger = require('../logger/user');
  const labelService = require('../service/label');
- const {labelValidation} = require('../utility/validation');
+ const {labelValidation, verifyToken} = require('../utility/validation');
  const redisClass = require('../utility/redis')
+ 
 
  
  class LabelController {
@@ -30,10 +31,14 @@
                     message: dataValidation.error.details[0].message
                 });
             }
+            let token = req.get('token')
+            console.log(token)
+            const tokenData = verifyToken(token);
             const labelData = {
                 labelName: req.body.labelName,
-                notesId: req.params.notesId
-            }
+                notesId: req.params.notesId,
+                userId:tokenData.data._id
+            }         
             const labelCreated = await labelService.createLabel(labelData);
             redisClass.clearCache();
             res.send({success: true, message: "Label Created!", data: labelCreated});

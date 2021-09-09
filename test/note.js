@@ -270,4 +270,113 @@ beforeEach((done) => {
         });
     });
 
+    /**
+     * /PUT request test
+     * Positive and Negative - Adding label to note using Note ID into database 
+     */
+     describe('PUT /addLabel/', () => {
+        it('givenValidDataItShould_addLabelToNoteSuccessfully_andReturnsStatusCodeAs200', (done) => {
+            chai.request(server)
+                .put('/addLabel')
+                .send(userInputs.addLabelToNotePos)
+                .set('token', token)
+                .end((error, res) => {
+                    if (error) {
+                        return done(error);
+                    }
+                    res.should.have.status(200);
+                    res.body.should.be.a('object');
+                    res.body.should.have.property("success").eql(true);
+                    res.body.should.have.property("message").eql("Label Added!");
+                    res.body.should.have.property("data").should.be.a('object');
+                    return done();
+                });
+        });
+
+        it('givenInValidNoteIdItShould_failToAddLabelToNote_andReturnsStatusCodeAs400', (done) => {
+            chai.request(server)
+                .put('/addLabel')
+                .send(userInputs.addLabelToNoteNegNoteId)
+                .set('token', token)
+                .end((error, res) => {
+                    if (error) {
+                        return done(error);
+                    }
+                    res.should.have.status(400);
+                    res.body.should.be.a('object');
+                    res.body.should.have.property("message").eql('"notesId" is not allowed to be empty');
+                    return done();
+                });
+        });
+
+        it('givenInValidLabelIdItShould_failToAddLabelToNote_andReturnsStatusCodeAs400', (done) => {
+            chai.request(server)
+                .put('/addLabel')
+                .send(userInputs.addLabelToNoteNegLabelId)
+                .set('token', token)
+                .end((error, res) => {
+                    if (error) {
+                        return done(error);
+                    }
+                    res.should.have.status(400);
+                    res.body.should.be.a('object');
+                    res.body.should.have.property("message").eql("\"labelId\" is not allowed to be empty");
+                    return done();
+                });
+        });
+    });
+
+    /**
+     * /PUT request test
+     * Positive and Negative - Deleting label from note using Note ID into database 
+     */
+     describe('delete /deleteLabel/', () => {
+        it('givenValidDataItShould_addLabelToNoteSuccessfully_andReturnsStatusCodeAs200', (done) => {
+            chai.request(server)
+                .put('/deleteLabel')
+                .send(userInputs.deleteLabelFromNotePos)
+                .set('token', token)
+                .end((error, res) => {
+                    if (error) {
+                        return done(error);
+                    }
+                    res.should.have.status(200);
+                    res.body.should.be.a('object');
+                    res.body.should.have.property("success").eql(true);
+                    res.body.should.have.property("message").eql("Label Deleted!");
+                    return done();
+                });
+        });
+
+        it('givenInValidNoteIdItShould_failTodeleteLabelfromNote_andReturnsStatusCodeAs400', (done) => {
+            chai.request(server)
+                .put('/deleteLabel')
+                .send(userInputs.deleteLabelToNoteNegNoteId)
+                .set('token', token)
+                .end((error, res) => {
+                    if (error) {
+                        return done(error);
+                    }
+                    res.should.have.status(404);
+                    res.body.should.be.a('object');
+                    return done();
+                });
+        });
+
+        it('givenInValidLabelIdItShould_failTodeleteLabelFromNote_andReturnsStatusCodeAs400', (done) => {
+            chai.request(server)
+                .put('/deleteLabel')
+                .send(userInputs.deleteLabelToNoteNegLabelId)
+                .set('token', token)
+                .end((error, res) => {
+                    if (error) {
+                        return done(error);
+                    }
+                    res.should.have.status(404);
+                    res.body.should.be.a('object');
+                    return done();
+                });
+        });
+    });
+
   

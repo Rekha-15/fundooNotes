@@ -41,7 +41,8 @@
          try {
              const label = new LabelModel({
                  labelName: labelData.labelName,
-                 notesId: labelData.notesId
+                 notesId: labelData.notesId,
+                 userId: labelData.userId
              });
              return await label.save({});
          } catch (error) {
