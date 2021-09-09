@@ -246,12 +246,24 @@ beforeEach((done) => {
                     if (error) {
                         return done(error);
                     }
-                    res.should.have.status(400);
+                    res.should.have.status(404);
                     return done();
                 });
         });
 
-        
+        it('givenDetails_WhenNotPassingToken_shouldNotDeleteLabel', (done) => {
+            chai.request(server)
+            .delete('/deleteLabel/6119eeb5e390f34140e68305')
+                .end((error, res) => {
+                    if (error) {
+                        return done(error);
+                    }
+                    res.should.have.status(401);
+                    res.body.should.be.a('object');
+                    res.body.should.have.property("message").eql("Authorisation failed! Invalid user");
+                    return done();
+                });
+        });
     });
 
 

@@ -19,19 +19,18 @@
          type: String,
          required: true
      },
+     userId:{ type: mongoose.Schema.Types.ObjectId, ref: 'users'},
      notesId: {
          type: String
      },
-     labels : {
-        type: [String]
-    }
- }, {
+    },
+    {
      timestamps: true,
      versionKey: false
  })
  
  const LabelModel = mongoose.model('Label', LabelSchema);
- 
+
  class LabelsModel {
      /**
       * @description function written to create label

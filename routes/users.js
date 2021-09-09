@@ -49,9 +49,9 @@ module.exports = (app) => {
   app.delete('/deleteLabel/:labelId',  verifyingToken, labelController.deleteLabelById);
 
   //add label to note api - PUT request
-  app.put('/addLabel',  verifyingToken, noteController.addLabelToNote);
+    app.put('/addLabel', verifyingToken, noteController.addLabelToNote);
 
-  //delete label from note api - PUT request
-  app.delete('/deleteLabel',  verifyingToken, noteController.deleteLabelFromNote);
+    //delete label from note api - PUT request
+    app.delete('/deleteLabel', verifyingToken, noteController.deleteLabelFromNote);
   
 }

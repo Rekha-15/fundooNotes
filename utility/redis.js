@@ -47,7 +47,6 @@ const logger = require('../logger/user');
       */
 
       checkCacheId(req, res, next) {
-        //const notesId = req.params.notesId;
         client.get("notesId", (error, data) => {
             if(error) {
                 logger.error("Some error occured while retriving data", error)
@@ -69,9 +68,10 @@ const logger = require('../logger/user');
       * @param {*} if there is no data function calls for next function
       */
       checkLabelCache(req, res, next) {
-          
          client.get("labelId", (error, data) => {
-             if(error) console.log('I am error', error);
+             if(error) {
+                logger.error("Some error occured while retriving data", error)
+            }
              if(data !== null) {
                  data = JSON.parse(data);
                  res.send({success: true, message: "Labels Retrieved!", data: data});

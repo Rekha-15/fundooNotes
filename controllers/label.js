@@ -37,12 +37,12 @@
             const labelCreated = await labelService.createLabel(labelData);
             redisClass.clearCache();
             res.send({success: true, message: "Label Created!", data: labelCreated});
-         } catch (error) {
+        }   catch (error) {
             logger.info('Some error occured while creating label', error)
             console.log(error)
             res.status(500).send({success: false, message: "Some error occurred while creating label"});
-         }
-     }
+        }
+    }
  
      /**
       * @description function written to get all labels
@@ -56,11 +56,11 @@
               const data = JSON.stringify(getAllLabels);
              redisClass.setDataInCache("labels", 3600, data)
              res.send({success: true, message: "Labels Retrieved!", data: getAllLabels});
-         } catch (error) {
+        } catch (error) {
              console.log(error);
              res.status(500).send({success: false, message: "Some error occurred while retrieving labels"});
-         }
-     }
+        }
+    }
  
      /**
       * @description function written to get label by ID
@@ -121,9 +121,9 @@
          } catch (error) {
              console.log(error);
              res.status(500).send({success: false, message: "Some error occurred while deleting label"});
-         }
+        }
     }
- }
+}
  
  //exporting class to utilize or call function created in this class
  module.exports = new LabelController();

@@ -24,7 +24,8 @@ class NotesController {
             }
             const notesData = {
                 title: req.body.title,
-                description: req.body.description
+                description: req.body.description,
+                userId: req.userId
             }
             redisClass.clearCache();
             const notesCreated = await notesService.createNotes(notesData);

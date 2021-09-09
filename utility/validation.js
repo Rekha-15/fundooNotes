@@ -117,6 +117,16 @@ const verifyingToken = (req, res, next) => {
   }
 }
 
+verifyToken = (token)=>{
+  const data = jwt.verify(token,process.env.ACCESS_TOKEN_KEY);
+  if(data){
+      return data;
+  }
+  else{
+     return "couldnt verify" ;
+  }
+}
+
 /**
  * @description   : sending an email through nodemailer
  * @module        : nodemailer, ejs
@@ -161,6 +171,7 @@ module.exports = {
   userLoginDetails,
   generatingToken,
   verifyingToken,
+  verifyToken,
   sendingEmail,
   getEmailFromToken,
   notesCreationValidation,
