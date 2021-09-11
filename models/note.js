@@ -135,20 +135,34 @@ class NotesModel {
     }
 }
 
+// /**
+//  * @description function written to remove label from note
+//  * @param {*} a valid noteId is expected
+//  * @param {*} a valid labelData is expected
+//  * @returns 
+//  */
+// async deleteLabelFromNote(notesId, labelData) {
+//     try {
+//         return await NoteModel.findByIdAndUpdate(notesId,
+//             {$pull : { "labels": (labelData.labelId)[(0)]} },
+//             {new: true});
+//     } catch (error) {
+//         return error;
+//     }
+//   }
+// }
+
 /**
- * @description function written to remove label from note
- * @param {*} a valid noteId is expected
- * @param {*} a valid labelData is expected
- * @returns 
- */
-async deleteLabelFromNote(notesId, labelData) {
-    try {
-        return await NoteModel.findByIdAndDelete(notesId,
-            {$pull : { "labels": (labelData.labelId)} },
-            {new: true});
-    } catch (error) {
-        return error;
-    }
+   * @description   : It removes label from an existing note
+   * @param {*} data
+   * @returns       : Promise
+  */
+ removeLabelFromNote = (data) => {
+    return new Promise((resolve, reject) => {
+      NoteModel.findByIdAndDelete(data.notesId, { $pull: { labelId: data.labelId } })
+        .then((label) => resolve(label))
+        .catch((err) => reject(err));
+    });
   }
 }
 

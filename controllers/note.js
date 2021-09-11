@@ -22,7 +22,7 @@ class NotesController {
                     message: dataValidation.error.details[0].message
                 });
             }
-            let token = req.get('token')
+                let token = req.get('token')
             //console.log(token)
                 const tokenData = verifyToken(token);
                 const notesData = {
@@ -200,32 +200,80 @@ class NotesController {
     }
 }
 
+// /**
+//  * @description function written to delete label from note
+//  * @param {*} a valid noteId is expected
+//  * @param {*} a valid labelData is expected
+//  * @returns 
+//  */
+//  async deleteLabelFromNote(req, res) {
+//     try {
+//         let dataValidation = addingRemovingLabelValidation.validate(req.body);
+//         if (dataValidation.error) {
+//             return res.status(400).send({
+//                 message: dataValidation.error.details[0].message
+//             });
+//         }
+//         let token = req.get('token')
+//        //console.log(token)
+//         const tokenData = verifyToken(token);
+//         const notesId = req.body.notesId;
+//         const labelData = {
+//             labelId: [req.body.labelId]
+//         }
+//         const userId = {
+//             userId: [tokenData.data._id]
+//         }
+
+//         const addLabelName = await notesService.deleteLabelFromNote(notesId, labelData);
+//         res.send({success: true, message: "Label Deleted!", data: addLabelName});
+//     } catch (error) {
+//         console.log(error);
+//         res.status(500).send({success: false, message: "Some error occurred while deleting label from notes"});
+//     }
+//  }
+
 /**
- * @description function written to delete label from note
- * @param {*} a valid noteId is expected
- * @param {*} a valid labelData is expected
- * @returns 
- */
- async deleteLabelFromNote(req, res) {
+   * @description : It is deleting an label from an existing note in fundooNotes
+   * @param {httprequest} req
+   * @param {httpresponse} res
+   * @method       : removeLabelFromNote from service.js
+  */
+ removeLabelFromNote = (req, res) => {
     try {
-        let dataValidation = addingRemovingLabelValidation.validate(req.body);
+        let token = req.get('token')
+        //console.log(token)
+        const tokenData = verifyToken(token);
+      const data = {
+        labelId: req.body.labelId,
+        notesId: req.body.noteId,
+        userId:tokenData.data._id,
+      };
+      let dataValidation = addingRemovingLabelValidation.validate(req.body);
         if (dataValidation.error) {
             return res.status(400).send({
                 message: dataValidation.error.details[0].message
             });
         }
-        const notesId = req.body.notesId;
-        const labelData = {
-            labelId: [req.body.labelId]
-        }
-
-        const addLabelName = await notesService.deleteLabelFromNote(notesId, labelData);
-        res.send({success: true, message: "Label Deleted!", data: addLabelName});
-    } catch (error) {
-        console.log(error);
-        res.status(500).send({success: false, message: "Some error occurred while deleting label from notes"});
+      notesService.removeLabelFromNote(data).then(() => {
+        res.status(200).send({
+          success: true,
+          message: 'label removed from note successfully',
+        });
+      }).catch((err) => {
+        res.status(400).send({
+          success: false,
+          message: 'label was unable to remove from note',
+          err,
+        });
+      });
+    } catch (err) {
+      res.status(500).send({
+        success: false,
+        message: 'Internal server error',
+      });
     }
- }
+  }
 }
 
 //exporting th whole class to utilize or call function created in this class

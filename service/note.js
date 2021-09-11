@@ -114,20 +114,36 @@
      }
  }
  
- /**
-  * @description function written to delete label from note
-  * @param {*} a valid noteId is expected
-  * @param {*} a valid labelData is expected
-  * @returns 
+//  /**
+//   * @description function written to delete label from note
+//   * @param {*} a valid noteId is expected
+//   * @param {*} a valid labelData is expected
+//   * @returns 
+//   */
+//  async deleteLabelFromNote(notesId, labelData) {
+//      try {
+//          return await notesModel.deleteLabelFromNote(notesId, labelData);
+//      } catch (error) {
+//          return error
+//      }
+//    }
+//  }
+
+/**
+   * @description   : It is used to delete an existing label from existing note taking data
+   *                  from controller and sending to models
+   * @param {data}  : it contains data which we are passing from body
+   * @returns       : Promise
   */
- async deleteLabelFromNote(notesId, labelData) {
-     try {
-         return await notesModel.deleteLabelFromNote(notesId, labelData);
-     } catch (error) {
-         return error
-     }
-   }
- }
+ removeLabelFromNote = (data) => {
+    return new Promise((resolve, reject) => {
+      const result = notesModel.removeLabelFromNote(data);
+      result.then((labelData) => resolve({ labelData }))
+        .catch((err) => reject({ err }));
+    });
+  }
+}
+
  
  //exporting the class to utilize or call function created in this class
  module.exports = new NotesService();
