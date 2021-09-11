@@ -316,54 +316,6 @@
          });
      });
  
-     /**
-      * /delete request test
-      * Positive and Negative - Deleting label from note using Note ID into database 
-      */
-      describe('delete /deleteLabel/', () => {
-         it('givenData_WhenValidData_ItShouldAbelToRemoveLabelfromNoteSuccessfully', (done) => {
-             chai.request(server)
-                 .delete('/deleteLabel')
-                 .send(userInputs.deleteLabelFromNotePos)
-                 .set('token', token)
-                 .end((error, res) => {
-                     if (error) {
-                         return done(error);
-                     }
-                     res.should.have.status(200);
-                     res.body.should.have.property("success").eql(true);
-                     res.body.should.have.property("message").eql("label removed from note successfully");
-                     return done();
-                 });
-         });
- 
-         it('givenData_whenInValidNoteId_ItShouldfailTodeleteLabelfromNote', (done) => {
-             chai.request(server)
-                 .delete('/deleteLabel')
-                 .send(userInputs.deleteLabelToNoteNegNoteId)
-                 .set('token', token)
-                 .end((error, res) => {
-                     if (error) {
-                         return done(error);
-                     }
-                     res.should.have.status(400);
-                     return done();
-                 });
-         });
- 
-         it('givenData_whenInValidLabelId_ItShouldfailTodeleteLabelFromNote', (done) => {
-             chai.request(server)
-                 .delete('/deleteLabel')
-                 .send(userInputs.deleteLabelToNoteNegLabelId)
-                 .set('token', token)
-                 .end((error, res) => {
-                     if (error) {
-                         return done(error);
-                     }
-                     res.should.have.status(400);
-                     return done();
-                 });
-         });
-     });
+     
  
    
