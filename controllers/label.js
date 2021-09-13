@@ -23,7 +23,15 @@
       * @param {*} a valid req body is expected
       * @param {*} res
       */
-     
+     async createLabel(req, res) {
+         try {
+            let dataValidation = labelValidation.validate(req.body);
+            if (dataValidation.error) {
+                return res.status(400).send({
+                    message: dataValidation.error.details[0].message
+                });
+            }
+                let token = req.get('token')
                 const tokenData = verifyToken(token);
                 const labelData = {
                 labelName: req.body.labelName,
