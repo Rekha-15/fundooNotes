@@ -3,10 +3,6 @@
         "labelName": "New Test Label"
     },
 
-    "labelCreateNegWithNoNotesId": {
-        "labelName": "New Test Label For Neg"
-    },
-
     "labelCreateNeg": {
         "labelName": ""
     },

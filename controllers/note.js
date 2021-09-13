@@ -23,13 +23,14 @@ class NotesController {
                 });
             }
                 let token = req.get('token')
-            //console.log(token)
+                 //console.log(token)
                 const tokenData = verifyToken(token);
                 const notesData = {
                 title: req.body.title,
                 description: req.body.description,
                 userId:tokenData.data._id
             };
+            
             redisClass.clearCache();
             const notesCreated = await notesService.createNotes(notesData);
             res.send({success: true, message: "Notes Created!", data: notesCreated});
@@ -180,7 +181,7 @@ class NotesController {
             return res.status(400).send({
                 message: dataValidation.error.details[0].message
             });
-        }
+        }        
         let token = req.get('token')
        //console.log(token)
         const tokenData = verifyToken(token);
@@ -191,7 +192,6 @@ class NotesController {
         const userId = {
         userId: [tokenData.data._id]
         }
-
         const addLabelName = await notesService.addLabelToNote(notesId, labelData);
         res.send({success: true, message: "Label Added!", data: addLabelName});
     } catch (error) {

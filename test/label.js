@@ -48,7 +48,7 @@ beforeEach((done) => {
      describe('POST labels /create', () => {
         it('givenCreteLabelDetails_whenProper_shouldmakePOSTRequestAndCreateLabel', (done) => {
             chai.request(server)
-                .post('/createLabel/611dc8d14652ea03d066b38e')
+                .post('/createLabel')
                 .send(userInputs.labelCreatePos)
                 .set('token', token)
                 .end((error, res) => {
@@ -66,7 +66,7 @@ beforeEach((done) => {
 
         it('givenDetails_WhenNotPassingToken_shouldNotCreateLable', (done) => {
             chai.request(server)
-                .post('/createLabel/611dc8d14652ea03d066b38e')
+                .post('/createLabel')
                 .send(userInputs.labelCreatePos)
                 .end((error, res) => {
                     if (error) {
@@ -79,24 +79,9 @@ beforeEach((done) => {
                 });
         });
 
-        it('givenLabelId_whenNoNotesId_shouldNotAbleToDeletTheLabel', (done) => {
-            chai.request(server)
-            .post('/createLabel')
-            .send(userInputs.labelCreateNegWithNoNotesId)
-            .set('token', token)
-            .end((error, res) => {
-                if (error) {
-                    return done(error);
-                }
-                res.should.have.status(404);
-                res.body.should.be.a('object');
-                return done();
-            });
-        });
-
         it('givenLabelDetails_WhenEmptyLabel_shouldNotCreateLable', (done) => {
             chai.request(server)
-            .post('/createLabel/611dc8d14652ea03d066b38e')
+            .post('/createLabel')
             .send(userInputs.labelCreateNeg)
             .set('token', token)
             .end((error, res) => {

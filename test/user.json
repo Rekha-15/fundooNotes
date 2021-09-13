@@ -3,7 +3,7 @@
             "registration": {
                 "firstName": "Ramya",
                 "lastName": "Abcde",
-                "email": "RAFGGUyWwYbAd.00100@gmail.com",
+                "email": "RAFGGRrTyWwYbAd.00100@gmail.com",
                 "password": "Password@15"
             },
         "registrationWithNolastName": {
@@ -59,7 +59,7 @@
 
         },
     
-        "userResetPasswordToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7ImVtYWlsIjoicmVraGFwYXRpbC4xNTA5QGdtYWlsLmNvbSIsIl9pZCI6IjYxMTMyNDViNDUwNTdmMWNhMDVjYjZiOCJ9LCJpYXQiOjE2MzEyMDQ0NDEsImV4cCI6MTYzMTI5MDg0MX0.GBRvM9-b2xlPhGU4F5axtMZEV7yRc3PPwWaeLh90UJM",
+        "userResetPasswordToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7ImVtYWlsIjoicmVraGFwYXRpbC4xNTA5QGdtYWlsLmNvbSIsIl9pZCI6IjYxMTMyNDViNDUwNTdmMWNhMDVjYjZiOCJ9LCJpYXQiOjE2MzEzNjEzNzAsImV4cCI6MTYzMTQ0Nzc3MH0.UWpJLvzU_Cfr6hwyzc--GfA3vaGh1AOJKrw33FY9SvE",
         "userResetWrongPasswordToken": "eyJhbGciOiJIUzI1NiIsInR5c.eyJlbWFpbCI6I"
     }
 }

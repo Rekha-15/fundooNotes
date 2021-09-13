@@ -18,36 +18,7 @@
 
  
  class LabelController {
-     /**
-      * @description function written to create label into database
-      * @param {*} a valid req body is expected
-      * @param {*} res
-      */
-     async createLabel(req, res) {
-         try {
-            let dataValidation = labelValidation.validate(req.body);
-            if (dataValidation.error) {
-                return res.status(400).send({
-                    message: dataValidation.error.details[0].message
-                });
-            }
-            let token = req.get('token')
-            console.log(token)
-            const tokenData = verifyToken(token);
-            const labelData = {
-                labelName: req.body.labelName,
-                notesId: req.params.notesId,
-                userId:tokenData.data._id
-            }         
-            const labelCreated = await labelService.createLabel(labelData);
-            redisClass.clearCache();
-            res.send({success: true, message: "Label Created!", data: labelCreated});
-        }   catch (error) {
-            logger.info('Some error occured while creating label', error)
-            console.log(error)
-            res.status(500).send({success: false, message: "Some error occurred while creating label"});
-        }
-    }
+     
  
      /**
       * @description function written to get all labels

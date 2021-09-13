@@ -325,17 +325,11 @@
             }
         },
 
-        "/createLabel/{notesId}": {
+        "/createLabel": {
             "post": {
                 "tags": ["Labels"],
-                "description": "create notes",
+                "description": "create label in fundooNotes",
                 "parameters": [
-                    {
-                        "name": "notesId",
-                        "in": "path",
-                        "required": true,
-                        "type": "string"
-                    },
                     {
                     "name": "create label",
                     "in": "body",

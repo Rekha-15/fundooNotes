@@ -25,8 +25,7 @@
      },
     },
     {
-     timestamps: true,
-     versionKey: false
+     timestamps: true
  })
  
  const LabelModel = mongoose.model('Label', LabelSchema);
@@ -41,8 +40,7 @@
          try {
              const label = new LabelModel({
                  labelName: labelData.labelName,
-                 notesId: labelData.notesId,
-                 userId: labelData.userId
+                userId: labelData.userId
              });
              return await label.save({});
          } catch (error) {

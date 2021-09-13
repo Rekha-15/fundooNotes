@@ -34,7 +34,7 @@ module.exports = (app) => {
   app.delete('/delete/:notesId', verifyingToken, noteController.deleteNotesById);
 
   //label creation api - POST request
-  app.post('/createLabel/:notesId',  verifyingToken, labelController.createLabel);
+  app.post('/createLabel',  verifyingToken, labelController.createLabel);
 
   //get all labels api - GET request
   app.get('/AllLabels', verifyingToken, labelController.getAllLabels);

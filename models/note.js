@@ -20,7 +20,6 @@ userId: { type: mongoose.Schema.Types.ObjectId, ref: 'users' },
   labels : {
     type: [String]
   },
-  userId: { type: mongoose.Schema.Types.ObjectId, ref: 'users' }
 }, {
   // generates the time stamp the data is been added
   timestamps: true,
