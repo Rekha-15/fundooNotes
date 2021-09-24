@@ -39,7 +39,7 @@
                 userId:tokenData.data._id,
             }       
             const labelCreated = await labelService.createLabel(labelData);
-            redisClass.clearCache();
+           // redisClass.clearCache();
             res.send({success: true, message: "Label Created!", data: labelCreated});
         }   catch (error) {
             logger.info('Some error occured while creating label', error)

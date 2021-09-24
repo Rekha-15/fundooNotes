@@ -15,9 +15,12 @@ const swaggerUI = require('swagger-ui-express')
 const swaggerDoc = require('./swagger/swagger.json')
 const logger = require('./logger/user')
 const redis = require('redis');
+const cors = require('cors');
 
 // create express app
 const app = express()
+
+app.use(cors());
 
 // parse requests of content-type - application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: true }))

@@ -110,7 +110,7 @@ class NotesModel {
 
  async deleteNote(notesId) {
     try {
-        return await NoteModel.findByIdAndUpdate(notesId.notesId, {
+        return await NoteModel.findByIdAndDelete(notesId.notesId, {
             isDeleted: notesData.isDeleted
         }, {new: true});
     } catch (error) {

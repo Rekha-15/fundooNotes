@@ -50,7 +50,7 @@ class Model {
       email: data.email,
       password: data.password,
     });
-    const user = await FundooNoteModel.findOne({ email: data.email });
+     const user = await FundooNoteModel.findOne({ email: data.email });
     if (user) {
       logger.error("User already exist", user)
       callback('User already exist');
