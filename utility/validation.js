@@ -111,7 +111,8 @@ const verifyingToken = (req, res, next) => {
           next()
         }
       })
-    } else {
+    } 
+    else {
       return res.status(401).send({ success: false, message: 'Authorisation failed! Invalid user' })
     }
   } catch (error) {

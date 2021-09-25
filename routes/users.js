@@ -30,8 +30,8 @@ module.exports = (app) => {
   //update note by Id api - PUT request
   app.put('/updateNote/:notesId', verifyingToken, noteController.updateNotesById);
 
-  //delete note by Id api - PUT request
-  app.delete('/delete/:notesId', verifyingToken, noteController.deleteNotesById);
+  //delete note by Id api -  request
+  app.delete('/deleteNote/:notesId', verifyingToken, noteController.deleteNote);
 
   //label creation api - POST request
   app.post('/createLabel',  verifyingToken, labelController.createLabel);

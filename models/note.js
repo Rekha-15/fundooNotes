@@ -108,14 +108,26 @@ class NotesModel {
 //       });
 //   };
 
- async deleteNote(notesId) {
-    try {
-        return await NoteModel.findByIdAndDelete(notesId.notesId, {
-            isDeleted: notesData.isDeleted
-        }, {new: true});
-    } catch (error) {
-        return error;
-    }
+//  async deleteNote(notesId) {
+//     try {
+//         return await NoteModel.findByIdAndUpdate(notesId.notesId, {
+//             isDeleted: notesData.isDeleted
+//         }, {new: true});
+//     } catch (error) {
+//         return error;
+//     }
+//   }
+
+/**
+   * @description   : It deleting the existing note and change the trash value to true
+   * @param {*} data
+   * @param {*} callback
+  */
+ deleteNote = (data, callback) => {
+    NoteModel.findByIdAndDelete(data, { isTrashed: false })
+      .then((note) => {
+        callback(null, note);
+      });
   }
 
   /**
