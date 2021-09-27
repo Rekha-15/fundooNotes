@@ -92,22 +92,14 @@
      //   });
      // };
      
-//       async deleteNoteById(notesId, notesData) {
-//        try {
-//            return await notesModel.deleteNote(notesId, notesData);
-//        } catch (error) {
-//            return error
-//        }
-//    }
+      async deleteNoteById(notesId, notesData) {
+       try {
+           return await notesModel.deleteNote(notesId, notesData);
+       } catch (error) {
+           return error
+       }
+   }
 
-/**
-   * @description   : It is used to delete an existing note taking data from controller
-   *                  and sending to models
-   * @param {data}  : it contains data which we are passing from body
-  */
- deleteNote = (data, callback) => {
-    notesModel.deleteNote(data, callback);
-  }
 
  
    /**
