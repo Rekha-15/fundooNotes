@@ -146,29 +146,56 @@ class NotesController {
   //   }
   // };
 
-  /**
-     * @description function written to delete note by ID
-     * @param {*} req 
-     * @param {*} res 
-     * @returns response
-     */
-   async deleteNotesById(req, res) {
+//   /**
+//      * @description function written to delete note by ID
+//      * @param {*} req 
+//      * @param {*} res 
+//      * @returns response
+//      */
+//    async deleteNotesById(req, res) {
+//     try {
+//         let notesId = req.params;
+//         const notesData = {
+//             _id: notesId,
+//             isDeleted: req.body.isDeleted
+//         }
+//         const deleteNote = await notesService.deleteNoteById(notesId);
+//         redisClass.clearCache();
+//         res.send({success: true, message: "Note Deleted!"});
+//     } catch (error) {
+//         console.log(error);
+//         res.status(500).send({success: false, message: "Some error occurred while updating notes"});
+//     }
+//   }
+
+/**
+   * @description : It is deleting an existing note in fundooNotes
+   * @param {httprequest} req
+   * @param {httpresponse} res
+   * @method       : deleteNote from service.js
+  */
+ deleteNote = (req, res) => {
     try {
-        let notesId = req.params;
-        const notesData = {
-            _id: notesId,
-            isDeleted: req.body.isDeleted
+        notesService.deleteNote(req.params.notesId, (error, result) => {
+        if (error) {
+          return res.status(400).send({
+            success: false,
+            message: 'Unable to delete the note',
+          });
         }
-        const deleteNote = await notesService.deleteNoteById(notesId);
-        redisClass.clearCache();
-        res.send({success: true, message: "Note Deleted!"});
-    } catch (error) {
-        console.log(error);
-        res.status(500).send({success: false, message: "Some error occurred while updating notes"});
+        return res.status(200).send({
+          success: true,
+          message: 'note deleted successfully',
+          result,
+        });
+      });
+    } catch (err) {
+      res.status(500).send({
+        success: false,
+        message: 'Internal server error',
+      });
     }
   }
-
-
 
   /**
      * @description function written to add label to note
