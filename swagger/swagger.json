@@ -129,14 +129,11 @@
             }
         },
         "/resetPassword": {
-            "put": {
-                "tags": [
-                    "FundooNotes resetPassword"
-                ],
-                "Summarry": "reset password",
-                "parameters": [
-                    {
-                        "name": "resetPassword",
+            "post": {
+                "tags": ["User"],
+                "description": "reset password",
+                "parameters": [{
+                        "name": "passwords",
                         "in": "body",
                         "schema": {
                             "$ref": "#/definitions/resetPassword"
@@ -594,12 +591,15 @@
             },
             "resetPassword": {
                 "type": "object",
-                "properties": {
-                    "password": {
-                        "type": "string"
-                    }
+            "properties": {
+                "password": {
+                    "type": "string"
+                },
+                "confirmPassword": {
+                    "type": "string"
                 }
-            },
+            }
+        },
             "Notes": {
                 "type": "object",
                 "properties": {

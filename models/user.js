@@ -127,14 +127,33 @@ class Model {
   //       return callback(error)
   //   }
 
-  resetPassword = async (data, callback) => {
-    const salt = await bcrypt.genSalt(10);
-    const encrypt = await bcrypt.hash(data.password, salt);
-    FundooNoteModel.findOneAndUpdate({ email: data.email }, { password: encrypt })
-      .then((credential) => {
-        callback(credential);
-      });
+//   resetPassword = async (data, callback) => {
+//     const salt = await bcrypt.genSalt(10);
+//     const encrypt = await bcrypt.hash(data.password, salt);
+//     FundooNoteModel.findOneAndUpdate({ email: data.email }, { password: encrypt })
+//       .then((credential) => {
+//         callback(credential);
+//       });
+//   }
+// }
+
+async resetPassword(userData, email) {
+  try {
+      const salt = bcrypt.genSaltSync(SALT_WORK_FACTOR);
+      const hashPassword = bcrypt.hashSync(userData.password, salt);
+      const resetPasswordData = await FundooNoteModel.findOne({'email': email})
+      const updatedPassword = await FundooNoteModel.findByIdAndUpdate(resetPasswordData.id, {
+          firstName: resetPasswordData.firstName,
+          lastName: resetPasswordData.lastName,
+          email: resetPasswordData.email,
+          password: hashPassword
+      }, {new : true})
+      sendEmail.sendSuccessEmail(resetPasswordData);
+      return updatedPassword;
+  } catch (error) {
+      return error;
   }
+}
 }
 
 //exporting the class        

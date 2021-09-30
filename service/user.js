@@ -100,27 +100,38 @@ class Service {
    * @param   {callback}  : giving result to controller
    * @method              : resetPassword from models
   */
-   resetPassword = (userInput, callback) => {
-    try{
-    const email = getEmailFromToken(userInput.token)
-    const inputData = {
-        email: email,
-        password: userInput.password
-    }
+//    resetPassword = (userInput, callback) => {
+//     try{
+//     const email = getEmailFromToken(userInput.token)
+//     const inputData = {
+//         email: email,
+//         password: userInput.password
+//     }
 
-    models.resetPassword(inputData, (error, data) =>{
-        if(error){
-            logger.error("Some error occured while updating password", error)
-            callback(error, null)
-         }else{
-             logger.info("Password has been reset successfully", data)
-            callback(null, data)
-         } 
-    })
-    }catch(error){
-        return callback(error, null)
-    }
+//     models.resetPassword(inputData, (error, data) =>{
+//         if(error){
+//             logger.error("Some error occured while updating password", error)
+//             callback(error, null)
+//          }else{
+//              logger.info("Password has been reset successfully", data)
+//             callback(null, data)
+//          } 
+//     })
+//     }catch(error){
+//         return callback(error, null)
+//     }
     
+// }
+// }
+
+async resetPassword(userData, token) {
+  try {
+      const email = helperClass.getEmailFromToken(token);
+      const resetPassword = await models.resetPassword(userData, email);
+      return resetPassword;
+  } catch (error) {
+      return error;
+  }
 }
 }
 

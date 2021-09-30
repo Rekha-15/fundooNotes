@@ -130,14 +130,14 @@ class Controller {
       };
       services.forgotPassword(userCredential, (error, result) => {
         if (error) {
-           logger.error("Error while trying to find user email-id",error);
+           //logger.error("Error while trying to find user email-id",error);
           return res.status(400).send({
             success: false,
             message: 'failed to send email',
             error,
           });
         }
-         logger.info("email found and sent link successfully😊",result);
+         //logger.info("email found and sent link successfully😊",result);
         return res.status(200).send({
           success: true,
           message: 'User email id exist and Email sent successfully',
@@ -160,38 +160,67 @@ class Controller {
    * @package         : jwt
    * @file            : user.js
   */
-   resetPassword = (req, res) => {
-    try {
-      const userCredential = {
-        token: req.headers.token,
-        password: req.body.password,
-      };
-      services.resetPassword(userCredential, (error, result) => {
-        if (error) {
-          logger.error("Error while resetting the password", error);
-          res.status(400).send({
-            success: false,
-            message: 'failed reset the password',
-            error,
-          });
-        } else {
-          logger.info("Password reset successfully", result)
-          res.status(200).send({
-          success: true,
-          message: 'password changed successfully',
-          result:  result,
-        });
+//    resetPassword = (req, res) => {
+//     try {
+//       const userCredential = {
+//         password: req.body.password,
+//         token: req.header.token,
+//       };
+//       services.resetPassword(userCredential, (error, result) => {
+//         if (error) {
+//           logger.error("Error while resetting the password", error);
+//           res.status(400).send({
+//             success: false,
+//             message: 'failed reset the password',
+//             error,
+//           });
+//         } else {
+//           logger.info("Password reset successfully", result)
+//           res.status(200).send({
+//           success: true,
+//           message: 'password changed successfully',
+//           result:  result,
+//         });
+//       }
+//      });
+//     } catch (err) {
+//       logger.error("Error while resetting the password", err);
+//       return res.status(401).send({
+//         success: false,
+//         message: 'Token expired or invalid token',
+//       });
+//     }
+//   }
+
+/**
+    * @description this function handles reset password api where user can update his password into database
+    * @param {*} req 
+    * @param {*} res 
+    * @returns 
+    */
+ async passwordReset(req, res) {
+  try {
+      const userPassword = {
+          password: req.body.password,
+          confirmPassword: req.body.confirmPassword
       }
-     });
-    } catch (err) {
-      logger.error("Error while resetting the password", err);
-      return res.status(401).send({
-        success: false,
-        message: 'Token expired or invalid token',
-      });
-    }
+      const userToken = req.headers.token;
+      console.log(userToken);
+      if(!userToken) {
+          return res.status(401).send({message: "Please get token!"});
+      }
+      else if(userPassword.password == userPassword.confirmPassword) {
+          const resetPassword = await services.resetPassword(userPassword, userToken);
+          return res.send({success: true, message: "Password is changed successfully!"});
+      }else {
+          return res.status(500).send({message: "Please enter same password in both password and confirmPassword fields!"});
+      }
+  } catch (error) {
+      res.status(500).send({message: error})
   }
 }
+
+ }
     
 //exporting the class
 module.exports = new Controller();

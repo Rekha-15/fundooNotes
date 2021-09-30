@@ -152,8 +152,8 @@ const sendingEmail = (data) => {
         from: process.env.EMAIL,
         to: data.email,
         subject: 'Re: Reset your password', 
-        //html: `${result} <p>${process.env.PASSWORD_URL}${generatingToken(data)}</p>`
-       html: `${result}<button><a href="${process.env.PASSWORD_URL}${generatingToken(data)}">Click here</a></button>`
+        html: `${result} <p>${process.env.PASSWORD_URL}${generatingToken(data)}</p>`
+      // html: `${result}<button><a href="${process.env.PASSWORD_URL}${generatingToken(data)}">Click here</a></button>`
       }
 
       transporter.sendMail(message, (err, info) => {
